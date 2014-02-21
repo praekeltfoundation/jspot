@@ -1,0 +1,20 @@
+{
+  "name": "potjs",
+  "version": "0.0.0",
+  "description": "Extracts gettext strings from Javascript files into pot files",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "./utils/test.sh test/"
+  },
+  "keywords": [
+    "gettext",
+    "po",
+    "pot"
+  ],
+  "author": "Praekelt Foundation",
+  "license": "BSD",
+  "devDependencies": {
+    "jshint": "~2.4.4",
+    "mocha": "~1.17.1"
+  }
+}
