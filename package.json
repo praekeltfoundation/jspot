@@ -16,5 +16,12 @@
   "devDependencies": {
     "jshint": "~2.4.4",
     "mocha": "~1.17.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/praekelt/jspot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/praekelt/jspot/issues"
   }
 }
