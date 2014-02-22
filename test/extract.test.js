@@ -2,6 +2,24 @@ var assert = require('assert');
 var extract = require('../lib/extract');
 
 describe("extract", function() {
+    it("should work with concatenated strings", function() {
+        assert.deepEqual(
+            extract("$('foo' + 'bar');"),
+            [{
+                method: 'gettext',
+                params: {message: 'foobar'}
+            }]);
+    });
+
+    it("should work with array joined strings", function() {
+        assert.deepEqual(
+            extract("$(['foo', 'bar'].join(' '));"),
+            [{
+                method: 'gettext',
+                params: {message: 'foo bar'}
+            }]);
+    });
+
     describe("$", function() {
         it("should extract member calls", function() {
             assert.deepEqual(
