@@ -16,7 +16,9 @@ describe("fn", function() {
                 function() { fn(null); },
                 new RegExp([
                     "gettext was given a value of type 'object'",
-                    "instead of a string or number: null"].join(' ')));
+                    "instead of a string or number for parameter",
+                    "'message': null"
+                ].join(' ')));
         });
 
         it("should return the method call's data", function() {
