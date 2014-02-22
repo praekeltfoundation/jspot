@@ -13,7 +13,7 @@ describe("fn", function() {
         it("should throw an error if the message param is unusable",
         function() {
             assert.throws(
-                function() { fn(null); },
+                function() { fn.gettext(null); },
                 new RegExp([
                     "gettext was given a value of type 'object'",
                     "instead of a string or number for parameter",
@@ -22,7 +22,7 @@ describe("fn", function() {
         });
 
         it("should return the method call's data", function() {
-            assert.deepEqual(fn('foo'), {
+            assert.deepEqual(fn.gettext('foo'), {
                 method: 'gettext',
                 params: {message: 'foo'}
             });
