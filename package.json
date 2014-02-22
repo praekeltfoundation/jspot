@@ -23,5 +23,9 @@
   },
   "bugs": {
     "url": "https://github.com/praekelt/jspot/issues"
+  },
+  "dependencies": {
+    "underscore": "~1.6.0",
+    "falafel": "~0.3.1"
   }
 }
