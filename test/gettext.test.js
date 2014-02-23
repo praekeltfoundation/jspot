@@ -4,7 +4,7 @@ var gettext = require('../lib/gettext');
 describe("gettext", function() {
     it("should proxy to .gettext when called directly", function() {
         assert.deepEqual(gettext('foo'), {
-            singular: 'foo',
+            key: 'foo',
             plural: null,
             domain: 'messages',
             context: ''
@@ -25,7 +25,7 @@ describe("gettext", function() {
 
         it("should return the method call's data", function() {
             assert.deepEqual(gettext.gettext('foo'), {
-                singular: 'foo',
+                key: 'foo',
                 plural: null,
                 domain: 'messages',
                 context: ''
