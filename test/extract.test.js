@@ -4,7 +4,7 @@ var extract = require('../lib/extract');
 describe("extract", function() {
     it("should work with concatenated strings", function() {
         assert.deepEqual(
-            extract("$('foo' + 'bar');"),
+            extract("gettext('foo' + 'bar');"),
             [{
                 method: 'gettext',
                 params: {message: 'foobar'}
@@ -13,25 +13,25 @@ describe("extract", function() {
 
     it("should work with array joined strings", function() {
         assert.deepEqual(
-            extract("$(['foo', 'bar'].join(' '));"),
+            extract("gettext(['foo', 'bar'].join(' '));"),
             [{
                 method: 'gettext',
                 params: {message: 'foo bar'}
             }]);
     });
 
-    describe("$", function() {
+    describe("gettext", function() {
         it("should extract member calls", function() {
             assert.deepEqual(
                 extract([
                     "function luke() {",
-                    "    this.$('foo');",
-                    "    thing.$('bar');",
-                    "    thing.$.call(null, 'baz');",
-                    "    thing.$.apply(null, ['qux']);",
-                    "    thing.subthing.$('corge');",
-                    "    thing.subthing.$.call(null, 'grault');",
-                    "    thing.subthing.$.apply(null, ['garply']);",
+                    "    this.gettext('foo');",
+                    "    thing.gettext('bar');",
+                    "    thing.gettext.call(null, 'baz');",
+                    "    thing.gettext.apply(null, ['qux']);",
+                    "    thing.subthing.gettext('corge');",
+                    "    thing.subthing.gettext.call(null, 'grault');",
+                    "    thing.subthing.gettext.apply(null, ['garply']);",
                     "}"
                 ].join('\n')),
                 [{
@@ -62,8 +62,8 @@ describe("extract", function() {
             assert.deepEqual(
                 extract([
                     "function luke() {",
-                        "$('foo');",
-                        "$('bar');",
+                        "gettext('foo');",
+                        "gettext('bar');",
                     "}"
                 ].join('\n')),
                 [{
@@ -79,8 +79,8 @@ describe("extract", function() {
             assert.deepEqual(
                 extract([
                     "function luke() {",
-                        "$.call(null, 'foo');",
-                        "$.call(null, 'bar');",
+                        "gettext.call(null, 'foo');",
+                        "gettext.call(null, 'bar');",
                     "}"
                 ].join('\n')),
                 [{
@@ -96,8 +96,8 @@ describe("extract", function() {
             assert.deepEqual(
                 extract([
                     "function luke() {",
-                        "$.apply(null, ['foo']);",
-                        "$.apply(null, ['bar']);",
+                        "gettext.apply(null, ['foo']);",
+                        "gettext.apply(null, ['bar']);",
                     "}"
                 ].join('\n')),
                 [{
@@ -110,18 +110,18 @@ describe("extract", function() {
         });
     });
 
-    describe("$.gettext", function() {
+    describe("gettext.gettext", function() {
         it("should extract member calls", function() {
             assert.deepEqual(
                 extract([
                     "function luke() {",
-                    "    this.$.gettext('foo');",
-                    "    thing.$.gettext('bar');",
-                    "    thing.$.gettext.call(null, 'baz');",
-                    "    thing.$.gettext.apply(null, ['qux']);",
-                    "    thing.subthing.$.gettext('corge');",
-                    "    thing.subthing.$.gettext.call(null, 'grault');",
-                    "    thing.subthing.$.gettext.apply(null, ['garply']);",
+                    "    this.gettext.gettext('foo');",
+                    "    thing.gettext.gettext('bar');",
+                    "    thing.gettext.gettext.call(null, 'baz');",
+                    "    thing.gettext.gettext.apply(null, ['qux']);",
+                    "    thing.subthing.gettext.gettext('corge');",
+                    "    thing.subthing.gettext.gettext.call(null, 'grault');",
+                    "    thing.subthing.gettext.gettext.apply(null, ['garply']);",
                     "}"
                 ].join('\n')),
                 [{
@@ -152,8 +152,8 @@ describe("extract", function() {
             assert.deepEqual(
                 extract([
                     "function luke() {",
-                        "$.gettext('foo');",
-                        "$.gettext('bar');",
+                        "gettext.gettext('foo');",
+                        "gettext.gettext('bar');",
                     "}"
                 ].join('\n')),
                 [{
@@ -169,8 +169,8 @@ describe("extract", function() {
             assert.deepEqual(
                 extract([
                     "function luke() {",
-                        "$.gettext.call(null, 'foo');",
-                        "$.gettext.call(null, 'bar');",
+                        "gettext.gettext.call(null, 'foo');",
+                        "gettext.gettext.call(null, 'bar');",
                     "}"
                 ].join('\n')),
                 [{
@@ -186,8 +186,8 @@ describe("extract", function() {
             assert.deepEqual(
                 extract([
                     "function luke() {",
-                        "$.gettext.apply(null, ['foo']);",
-                        "$.gettext.apply(null, ['bar']);",
+                        "gettext.gettext.apply(null, ['foo']);",
+                        "gettext.gettext.apply(null, ['bar']);",
                     "}"
                 ].join('\n')),
                 [{
