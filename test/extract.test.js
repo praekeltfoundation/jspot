@@ -20,6 +20,36 @@ describe("extract", function() {
             }]);
     });
 
+    it("should allow a different keyword to be used", function() {
+        assert.deepEqual(
+            extract([
+                "function luke() {",
+                "    _('foo');",
+                "    _.gettext('bar');",
+                "    thing._('baz');",
+                "    thing.subthing._('qux');",
+                "    thing.subthing._.gettext('corge');",
+                "}"
+            ].join('\n'),
+            {keyword: '_'}),
+            [{
+                method: 'gettext',
+                params: {message: 'foo'}
+            }, {
+                method: 'gettext',
+                params: {message: 'bar'}
+            }, {
+                method: 'gettext',
+                params: {message: 'baz'}
+            }, {
+                method: 'gettext',
+                params: {message: 'qux'}
+            }, {
+                method: 'gettext',
+                params: {message: 'corge'}
+            }]);
+    });
+
     describe("gettext", function() {
         it("should extract member calls", function() {
             assert.deepEqual(
