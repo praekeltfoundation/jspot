@@ -10,7 +10,8 @@ describe("extract", function() {
                 plural: null,
                 domain: 'messages',
                 context: '',
-                line: 1
+                line: 1,
+                filename: ''
             }]);
     });
 
@@ -22,7 +23,8 @@ describe("extract", function() {
                 plural: null,
                 domain: 'messages',
                 context: '',
-                line: 1
+                line: 1,
+                filename: ''
             }]);
     });
 
@@ -32,9 +34,10 @@ describe("extract", function() {
                 "function palpatine() {",
                 "    gettext(null);",
                 "}"
-            ].join('\n'));
+            ].join('\n'),
+            {filename: 'foo.js'});
         },
-        /on line 2/);
+        /on line 2 of file 'foo.js'/);
     });
 
     it("should allow a different keyword to be used", function() {
@@ -54,31 +57,36 @@ describe("extract", function() {
                 plural: null,
                 domain: 'messages',
                 context: '',
-                line: 2
+                line: 2,
+                filename: ''
             }, {
                 key: 'bar',
                 plural: null,
                 domain: 'messages',
                 context: '',
-                line: 3
+                line: 3,
+                filename: ''
             }, {
                 key: 'baz',
                 plural: null,
                 domain: 'messages',
                 context: '',
-                line: 4
+                line: 4,
+                filename: ''
             }, {
                 key: 'qux',
                 plural: null,
                 domain: 'messages',
                 context: '',
-                line: 5
+                line: 5,
+                filename: ''
             }, {
                 key: 'corge',
                 plural: null,
                 domain: 'messages',
                 context: '',
-                line: 6
+                line: 6,
+                filename: '',
             }]);
     });
 
@@ -101,43 +109,50 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 2
+                    line: 2,
+                    filename: ''
                 }, {
                     key: 'bar',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 3
+                    line: 3,
+                    filename: ''
                 }, {
                     key: 'baz',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 4
+                    line: 4,
+                    filename: ''
                 }, {
                     key: 'qux',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 5
+                    line: 5,
+                    filename: ''
                 }, {
                     key: 'corge',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 6
+                    line: 6,
+                    filename: ''
                 }, {
                     key: 'grault',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 7
+                    line: 7,
+                    filename: ''
                 }, {
                     key: 'garply',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 8
+                    line: 8,
+                    filename: ''
                 }]);
         });
 
@@ -154,13 +169,15 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 2
+                    line: 2,
+                    filename: '',
                 }, {
                     key: 'bar',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 3
+                    line: 3,
+                    filename: '',
                 }]);
         });
 
@@ -177,13 +194,15 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 2
+                    line: 2,
+                    filename: '',
                 }, {
                     key: 'bar',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 3
+                    line: 3,
+                    filename: '',
                 }]);
         });
 
@@ -200,13 +219,15 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 2
+                    line: 2,
+                    filename: '',
                 }, {
                     key: 'bar',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 3
+                    line: 3,
+                    filename: '',
                 }]);
         });
     });
@@ -230,43 +251,50 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 2
+                    line: 2,
+                    filename: '',
                 }, {
                     key: 'bar',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 3
+                    line: 3,
+                    filename: '',
                 }, {
                     key: 'baz',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 4
+                    line: 4,
+                    filename: '',
                 }, {
                     key: 'qux',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 5
+                    line: 5,
+                    filename: '',
                 }, {
                     key: 'corge',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 6
+                    line: 6,
+                    filename: '',
                 }, {
                     key: 'grault',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 7
+                    line: 7,
+                    filename: '',
                 }, {
                     key: 'garply',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 8
+                    line: 8,
+                    filename: '',
                 }]);
         });
 
@@ -283,13 +311,15 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 2
+                    line: 2,
+                    filename: ''
                 }, {
                     key: 'bar',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 3
+                    line: 3,
+                    filename: ''
                 }]);
         });
 
@@ -306,13 +336,15 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 2
+                    line: 2,
+                    filename: ''
                 }, {
                     key: 'bar',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 3
+                    line: 3,
+                    filename: ''
                 }]);
         });
 
@@ -329,13 +361,15 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 2
+                    line: 2,
+                    filename: ''
                 }, {
                     key: 'bar',
                     plural: null,
                     domain: 'messages',
                     context: '',
-                    line: 3
+                    line: 3,
+                    filename: ''
                 }]);
         });
     });
