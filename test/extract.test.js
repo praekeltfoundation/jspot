@@ -9,6 +9,7 @@ describe("extract", function() {
                 singular: 'foobar',
                 plural: null,
                 domain: 'messages',
+                context: '',
                 line: 1
             }]);
     });
@@ -20,6 +21,7 @@ describe("extract", function() {
                 singular: 'foo bar',
                 plural: null,
                 domain: 'messages',
+                context: '',
                 line: 1
             }]);
     });
@@ -51,26 +53,31 @@ describe("extract", function() {
                 singular: 'foo',
                 plural: null,
                 domain: 'messages',
+                context: '',
                 line: 2
             }, {
                 singular: 'bar',
                 plural: null,
                 domain: 'messages',
+                context: '',
                 line: 3
             }, {
                 singular: 'baz',
                 plural: null,
                 domain: 'messages',
+                context: '',
                 line: 4
             }, {
                 singular: 'qux',
                 plural: null,
                 domain: 'messages',
+                context: '',
                 line: 5
             }, {
                 singular: 'corge',
                 plural: null,
                 domain: 'messages',
+                context: '',
                 line: 6
             }]);
     });
@@ -93,36 +100,43 @@ describe("extract", function() {
                     singular: 'foo',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 2
                 }, {
                     singular: 'bar',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 3
                 }, {
                     singular: 'baz',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 4
                 }, {
                     singular: 'qux',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 5
                 }, {
                     singular: 'corge',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 6
                 }, {
                     singular: 'grault',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 7
                 }, {
                     singular: 'garply',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 8
                 }]);
         });
@@ -139,11 +153,13 @@ describe("extract", function() {
                     singular: 'foo',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 2
                 }, {
                     singular: 'bar',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 3
                 }]);
         });
@@ -160,11 +176,13 @@ describe("extract", function() {
                     singular: 'foo',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 2
                 }, {
                     singular: 'bar',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 3
                 }]);
         });
@@ -181,11 +199,13 @@ describe("extract", function() {
                     singular: 'foo',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 2
                 }, {
                     singular: 'bar',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 3
                 }]);
         });
@@ -209,36 +229,43 @@ describe("extract", function() {
                     singular: 'foo',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 2
                 }, {
                     singular: 'bar',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 3
                 }, {
                     singular: 'baz',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 4
                 }, {
                     singular: 'qux',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 5
                 }, {
                     singular: 'corge',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 6
                 }, {
                     singular: 'grault',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 7
                 }, {
                     singular: 'garply',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 8
                 }]);
         });
@@ -255,11 +282,13 @@ describe("extract", function() {
                     singular: 'foo',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 2
                 }, {
                     singular: 'bar',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 3
                 }]);
         });
@@ -276,11 +305,13 @@ describe("extract", function() {
                     singular: 'foo',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 2
                 }, {
                     singular: 'bar',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 3
                 }]);
         });
@@ -297,11 +328,13 @@ describe("extract", function() {
                     singular: 'foo',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 2
                 }, {
                     singular: 'bar',
                     plural: null,
                     domain: 'messages',
+                    context: '',
                     line: 3
                 }]);
         });

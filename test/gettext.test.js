@@ -6,7 +6,8 @@ describe("gettext", function() {
         assert.deepEqual(gettext('foo'), {
             singular: 'foo',
             plural: null,
-            domain: 'messages'
+            domain: 'messages',
+            context: ''
         });
     });
 
@@ -26,7 +27,8 @@ describe("gettext", function() {
             assert.deepEqual(gettext.gettext('foo'), {
                 singular: 'foo',
                 plural: null,
-                domain: 'messages'
+                domain: 'messages',
+                context: ''
             });
         });
     });
