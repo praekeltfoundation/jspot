@@ -7,7 +7,8 @@ describe("extract", function() {
             extract("gettext('foo' + 'bar');"),
             [{
                 method: 'gettext',
-                params: {message: 'foobar'}
+                params: {message: 'foobar'},
+                line: 1
             }]);
     });
 
@@ -16,7 +17,8 @@ describe("extract", function() {
             extract("gettext(['foo', 'bar'].join(' '));"),
             [{
                 method: 'gettext',
-                params: {message: 'foo bar'}
+                params: {message: 'foo bar'},
+                line: 1
             }]);
     });
 
@@ -34,19 +36,24 @@ describe("extract", function() {
             {keyword: '_'}),
             [{
                 method: 'gettext',
-                params: {message: 'foo'}
+                params: {message: 'foo'},
+                line: 2
             }, {
                 method: 'gettext',
-                params: {message: 'bar'}
+                params: {message: 'bar'},
+                line: 3
             }, {
                 method: 'gettext',
-                params: {message: 'baz'}
+                params: {message: 'baz'},
+                line: 4
             }, {
                 method: 'gettext',
-                params: {message: 'qux'}
+                params: {message: 'qux'},
+                line: 5
             }, {
                 method: 'gettext',
-                params: {message: 'corge'}
+                params: {message: 'corge'},
+                line: 6
             }]);
     });
 
@@ -66,25 +73,32 @@ describe("extract", function() {
                 ].join('\n')),
                 [{
                     method: 'gettext',
-                    params: {message: 'foo'}
+                    params: {message: 'foo'},
+                    line: 2
                 }, {
                     method: 'gettext',
-                    params: {message: 'bar'}
+                    params: {message: 'bar'},
+                    line: 3
                 }, {
                     method: 'gettext',
-                    params: {message: 'baz'}
+                    params: {message: 'baz'},
+                    line: 4
                 }, {
                     method: 'gettext',
-                    params: {message: 'qux'}
+                    params: {message: 'qux'},
+                    line: 5
                 }, {
                     method: 'gettext',
-                    params: {message: 'corge'}
+                    params: {message: 'corge'},
+                    line: 6
                 }, {
                     method: 'gettext',
-                    params: {message: 'grault'}
+                    params: {message: 'grault'},
+                    line: 7
                 }, {
                     method: 'gettext',
-                    params: {message: 'garply'}
+                    params: {message: 'garply'},
+                    line: 8
                 }]);
         });
 
@@ -98,10 +112,12 @@ describe("extract", function() {
                 ].join('\n')),
                 [{
                     method: 'gettext',
-                    params: {message: 'foo'}
+                    params: {message: 'foo'},
+                    line: 2
                 }, {
                     method: 'gettext',
-                    params: {message: 'bar'}
+                    params: {message: 'bar'},
+                    line: 3
                 }]);
         });
 
@@ -115,10 +131,12 @@ describe("extract", function() {
                 ].join('\n')),
                 [{
                     method: 'gettext',
-                    params: {message: 'foo'}
+                    params: {message: 'foo'},
+                    line: 2
                 }, {
                     method: 'gettext',
-                    params: {message: 'bar'}
+                    params: {message: 'bar'},
+                    line: 3
                 }]);
         });
 
@@ -132,10 +150,12 @@ describe("extract", function() {
                 ].join('\n')),
                 [{
                     method: 'gettext',
-                    params: {message: 'foo'}
+                    params: {message: 'foo'},
+                    line: 2
                 }, {
                     method: 'gettext',
-                    params: {message: 'bar'}
+                    params: {message: 'bar'},
+                    line: 3
                 }]);
         });
     });
@@ -156,25 +176,32 @@ describe("extract", function() {
                 ].join('\n')),
                 [{
                     method: 'gettext',
-                    params: {message: 'foo'}
+                    params: {message: 'foo'},
+                    line: 2
                 }, {
                     method: 'gettext',
-                    params: {message: 'bar'}
+                    params: {message: 'bar'},
+                    line: 3
                 }, {
                     method: 'gettext',
-                    params: {message: 'baz'}
+                    params: {message: 'baz'},
+                    line: 4
                 }, {
                     method: 'gettext',
-                    params: {message: 'qux'}
+                    params: {message: 'qux'},
+                    line: 5
                 }, {
                     method: 'gettext',
-                    params: {message: 'corge'}
+                    params: {message: 'corge'},
+                    line: 6
                 }, {
                     method: 'gettext',
-                    params: {message: 'grault'}
+                    params: {message: 'grault'},
+                    line: 7
                 }, {
                     method: 'gettext',
-                    params: {message: 'garply'}
+                    params: {message: 'garply'},
+                    line: 8
                 }]);
         });
 
@@ -188,10 +215,12 @@ describe("extract", function() {
                 ].join('\n')),
                 [{
                     method: 'gettext',
-                    params: {message: 'foo'}
+                    params: {message: 'foo'},
+                    line: 2
                 }, {
                     method: 'gettext',
-                    params: {message: 'bar'}
+                    params: {message: 'bar'},
+                    line: 3
                 }]);
         });
 
@@ -205,10 +234,12 @@ describe("extract", function() {
                 ].join('\n')),
                 [{
                     method: 'gettext',
-                    params: {message: 'foo'}
+                    params: {message: 'foo'},
+                    line: 2
                 }, {
                     method: 'gettext',
-                    params: {message: 'bar'}
+                    params: {message: 'bar'},
+                    line: 3
                 }]);
         });
 
@@ -222,10 +253,12 @@ describe("extract", function() {
                 ].join('\n')),
                 [{
                     method: 'gettext',
-                    params: {message: 'foo'}
+                    params: {message: 'foo'},
+                    line: 2
                 }, {
                     method: 'gettext',
-                    params: {message: 'bar'}
+                    params: {message: 'bar'},
+                    line: 3
                 }]);
         });
     });
