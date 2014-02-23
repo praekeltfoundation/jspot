@@ -6,8 +6,9 @@ describe("extract", function() {
         assert.deepEqual(
             extract("gettext('foo' + 'bar');"),
             [{
-                method: 'gettext',
-                params: {message: 'foobar'},
+                singular: 'foobar',
+                plural: null,
+                domain: 'messages',
                 line: 1
             }]);
     });
@@ -16,8 +17,9 @@ describe("extract", function() {
         assert.deepEqual(
             extract("gettext(['foo', 'bar'].join(' '));"),
             [{
-                method: 'gettext',
-                params: {message: 'foo bar'},
+                singular: 'foo bar',
+                plural: null,
+                domain: 'messages',
                 line: 1
             }]);
     });
@@ -46,24 +48,29 @@ describe("extract", function() {
             ].join('\n'),
             {keyword: '_'}),
             [{
-                method: 'gettext',
-                params: {message: 'foo'},
+                singular: 'foo',
+                plural: null,
+                domain: 'messages',
                 line: 2
             }, {
-                method: 'gettext',
-                params: {message: 'bar'},
+                singular: 'bar',
+                plural: null,
+                domain: 'messages',
                 line: 3
             }, {
-                method: 'gettext',
-                params: {message: 'baz'},
+                singular: 'baz',
+                plural: null,
+                domain: 'messages',
                 line: 4
             }, {
-                method: 'gettext',
-                params: {message: 'qux'},
+                singular: 'qux',
+                plural: null,
+                domain: 'messages',
                 line: 5
             }, {
-                method: 'gettext',
-                params: {message: 'corge'},
+                singular: 'corge',
+                plural: null,
+                domain: 'messages',
                 line: 6
             }]);
     });
@@ -83,32 +90,39 @@ describe("extract", function() {
                     "}"
                 ].join('\n')),
                 [{
-                    method: 'gettext',
-                    params: {message: 'foo'},
+                    singular: 'foo',
+                    plural: null,
+                    domain: 'messages',
                     line: 2
                 }, {
-                    method: 'gettext',
-                    params: {message: 'bar'},
+                    singular: 'bar',
+                    plural: null,
+                    domain: 'messages',
                     line: 3
                 }, {
-                    method: 'gettext',
-                    params: {message: 'baz'},
+                    singular: 'baz',
+                    plural: null,
+                    domain: 'messages',
                     line: 4
                 }, {
-                    method: 'gettext',
-                    params: {message: 'qux'},
+                    singular: 'qux',
+                    plural: null,
+                    domain: 'messages',
                     line: 5
                 }, {
-                    method: 'gettext',
-                    params: {message: 'corge'},
+                    singular: 'corge',
+                    plural: null,
+                    domain: 'messages',
                     line: 6
                 }, {
-                    method: 'gettext',
-                    params: {message: 'grault'},
+                    singular: 'grault',
+                    plural: null,
+                    domain: 'messages',
                     line: 7
                 }, {
-                    method: 'gettext',
-                    params: {message: 'garply'},
+                    singular: 'garply',
+                    plural: null,
+                    domain: 'messages',
                     line: 8
                 }]);
         });
@@ -122,12 +136,14 @@ describe("extract", function() {
                     "}"
                 ].join('\n')),
                 [{
-                    method: 'gettext',
-                    params: {message: 'foo'},
+                    singular: 'foo',
+                    plural: null,
+                    domain: 'messages',
                     line: 2
                 }, {
-                    method: 'gettext',
-                    params: {message: 'bar'},
+                    singular: 'bar',
+                    plural: null,
+                    domain: 'messages',
                     line: 3
                 }]);
         });
@@ -141,12 +157,14 @@ describe("extract", function() {
                     "}"
                 ].join('\n')),
                 [{
-                    method: 'gettext',
-                    params: {message: 'foo'},
+                    singular: 'foo',
+                    plural: null,
+                    domain: 'messages',
                     line: 2
                 }, {
-                    method: 'gettext',
-                    params: {message: 'bar'},
+                    singular: 'bar',
+                    plural: null,
+                    domain: 'messages',
                     line: 3
                 }]);
         });
@@ -160,12 +178,14 @@ describe("extract", function() {
                     "}"
                 ].join('\n')),
                 [{
-                    method: 'gettext',
-                    params: {message: 'foo'},
+                    singular: 'foo',
+                    plural: null,
+                    domain: 'messages',
                     line: 2
                 }, {
-                    method: 'gettext',
-                    params: {message: 'bar'},
+                    singular: 'bar',
+                    plural: null,
+                    domain: 'messages',
                     line: 3
                 }]);
         });
@@ -186,32 +206,39 @@ describe("extract", function() {
                     "}"
                 ].join('\n')),
                 [{
-                    method: 'gettext',
-                    params: {message: 'foo'},
+                    singular: 'foo',
+                    plural: null,
+                    domain: 'messages',
                     line: 2
                 }, {
-                    method: 'gettext',
-                    params: {message: 'bar'},
+                    singular: 'bar',
+                    plural: null,
+                    domain: 'messages',
                     line: 3
                 }, {
-                    method: 'gettext',
-                    params: {message: 'baz'},
+                    singular: 'baz',
+                    plural: null,
+                    domain: 'messages',
                     line: 4
                 }, {
-                    method: 'gettext',
-                    params: {message: 'qux'},
+                    singular: 'qux',
+                    plural: null,
+                    domain: 'messages',
                     line: 5
                 }, {
-                    method: 'gettext',
-                    params: {message: 'corge'},
+                    singular: 'corge',
+                    plural: null,
+                    domain: 'messages',
                     line: 6
                 }, {
-                    method: 'gettext',
-                    params: {message: 'grault'},
+                    singular: 'grault',
+                    plural: null,
+                    domain: 'messages',
                     line: 7
                 }, {
-                    method: 'gettext',
-                    params: {message: 'garply'},
+                    singular: 'garply',
+                    plural: null,
+                    domain: 'messages',
                     line: 8
                 }]);
         });
@@ -225,12 +252,14 @@ describe("extract", function() {
                     "}"
                 ].join('\n')),
                 [{
-                    method: 'gettext',
-                    params: {message: 'foo'},
+                    singular: 'foo',
+                    plural: null,
+                    domain: 'messages',
                     line: 2
                 }, {
-                    method: 'gettext',
-                    params: {message: 'bar'},
+                    singular: 'bar',
+                    plural: null,
+                    domain: 'messages',
                     line: 3
                 }]);
         });
@@ -244,12 +273,14 @@ describe("extract", function() {
                     "}"
                 ].join('\n')),
                 [{
-                    method: 'gettext',
-                    params: {message: 'foo'},
+                    singular: 'foo',
+                    plural: null,
+                    domain: 'messages',
                     line: 2
                 }, {
-                    method: 'gettext',
-                    params: {message: 'bar'},
+                    singular: 'bar',
+                    plural: null,
+                    domain: 'messages',
                     line: 3
                 }]);
         });
@@ -263,12 +294,14 @@ describe("extract", function() {
                     "}"
                 ].join('\n')),
                 [{
-                    method: 'gettext',
-                    params: {message: 'foo'},
+                    singular: 'foo',
+                    plural: null,
+                    domain: 'messages',
                     line: 2
                 }, {
-                    method: 'gettext',
-                    params: {message: 'bar'},
+                    singular: 'bar',
+                    plural: null,
+                    domain: 'messages',
                     line: 3
                 }]);
         });
