@@ -22,6 +22,17 @@ describe("extract", function() {
             }]);
     });
 
+    it("should show line numbers in errors", function() {
+        assert.throws(function() {
+            extract([
+                "function palpatine() {",
+                "    gettext(null);",
+                "}"
+            ].join('\n'));
+        },
+        /on line 2/);
+    });
+
     it("should allow a different keyword to be used", function() {
         assert.deepEqual(
             extract([
