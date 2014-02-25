@@ -77,6 +77,17 @@ describe('cli', function() {
                 './test/fixtures/extract/domains/output/messages.pot');
         });
 
-        it("should support multiple contexts");
+        it("should support multiple contexts", function() {
+            cli.parse([
+                'extract',
+                '-t', tmpdir,
+                './test/fixtures/extract/contexts/input/a.js',
+                './test/fixtures/extract/contexts/input/b.js'
+            ]);
+
+            assert_files_equal(
+                path.join(tmpdir, 'messages.pot'),
+                './test/fixtures/extract/contexts/output/messages.pot');
+        });
     });
 });

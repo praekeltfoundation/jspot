@@ -1,0 +1,1 @@
+gettext.pgettext('bar', 'goodbye');
