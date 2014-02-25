@@ -99,6 +99,19 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
+        it("should throw an error if the category param is unusable",
+        function() {
+            assert.throws(
+                function() {
+                    gettext.dcgettext('domain', 'key', null);
+                },
+                new RegExp([
+                    "dcgettext was given a value of type 'object'",
+                    "instead of a string or number for parameter",
+                    "'category': null"
+                ].join(' ')));
+        });
+
         it("should return the call's gettext data", function() {
             assert.deepEqual(gettext.dcgettext('domain', 'key', 'category'), {
                 key: 'key',
@@ -238,6 +251,20 @@ describe("gettext", function() {
                     "dcngettext was given a value of type 'object'",
                     "instead of a string or number for parameter",
                     "'plural': null"
+                ].join(' ')));
+        });
+
+        it("should throw an error if the category param is unusable",
+        function() {
+            assert.throws(
+                function() {
+                    gettext.dcngettext(
+                        'domain', 'key', 'plural', 'value', null);
+                },
+                new RegExp([
+                    "dcngettext was given a value of type 'object'",
+                    "instead of a string or number for parameter",
+                    "'category': null"
                 ].join(' ')));
         });
 
@@ -517,6 +544,20 @@ describe("gettext", function() {
                     "dcnpgettext was given a value of type 'object'",
                     "instead of a string or number for parameter",
                     "'plural': null"
+                ].join(' ')));
+        });
+
+        it("should throw an error if the category param is unusable",
+        function() {
+            assert.throws(
+                function() {
+                    gettext.dcnpgettext(
+                        'domain', 'context', 'key', 'plural', 'value', null);
+                },
+                new RegExp([
+                    "dcnpgettext was given a value of type 'object'",
+                    "instead of a string or number for parameter",
+                    "'category': null"
                 ].join(' ')));
         });
 
