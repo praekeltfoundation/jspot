@@ -15,7 +15,8 @@
   "license": "BSD",
   "devDependencies": {
     "jshint": "~2.4.4",
-    "mocha": "~1.17.1"
+    "mocha": "~1.17.1",
+    "tmp": "0.0.23"
   },
   "repository": {
     "type": "git",
