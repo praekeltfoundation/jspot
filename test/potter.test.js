@@ -38,9 +38,11 @@ describe("potter", function() {
         assert.deepEqual(pots.messages.headers, {
             'project-id-version': 'PACKAGE VERSION',
             'language-team': 'LANGUAGE <LL@li.org>',
-            'po-revision-date': '2014-02-26 12:58:+0200',
+            'po-revision-date': 'YEAR-MO-DA HO:MI+ZONE',
+            'pot-creation-date': '2014-02-26 12:58:+0200',
             'language': '',
             'mime-version': '1.0',
+            'content-type': 'text/plain; charset=utf-8',
             'content-transfer-encoding': '8bit'
         });
 
@@ -49,9 +51,11 @@ describe("potter", function() {
         assert.deepEqual(pots.lerps.headers, {
             'project-id-version': 'PACKAGE VERSION',
             'language-team': 'LANGUAGE <LL@li.org>',
-            'po-revision-date': '2014-02-26 12:58:+0200',
+            'po-revision-date': 'YEAR-MO-DA HO:MI+ZONE',
+            'pot-creation-date': '2014-02-26 12:58:+0200',
             'language': '',
             'mime-version': '1.0',
+            'content-type': 'text/plain; charset=utf-8',
             'content-transfer-encoding': '8bit'
         });
     });
