@@ -1,8 +1,19 @@
+var _ = require('underscore');
 var assert = require('assert');
 var potter = require('../lib/potter');
 
 
 describe("potter", function() {
+    var now = _.now;
+
+    before(function() {
+        _.now = _.constant(1393369106938);
+    });
+
+    after(function() {
+        _.now = now;
+    });
+
     it("should create a new domain pot if none currently exists", function() {
         var pots = {error: {}};
 
@@ -27,7 +38,7 @@ describe("potter", function() {
         assert.deepEqual(pots.messages.headers, {
             'project-id-version': 'PACKAGE VERSION',
             'language-team': 'LANGUAGE <LL@li.org>',
-            'po-revision-date': 'YEAR-MO-DA HO:MI+ZONE',
+            'po-revision-date': '2014-02-26 12:58:+0200',
             'language': '',
             'mime-version': '1.0',
             'content-transfer-encoding': '8bit'
@@ -38,7 +49,7 @@ describe("potter", function() {
         assert.deepEqual(pots.lerps.headers, {
             'project-id-version': 'PACKAGE VERSION',
             'language-team': 'LANGUAGE <LL@li.org>',
-            'po-revision-date': 'YEAR-MO-DA HO:MI+ZONE',
+            'po-revision-date': '2014-02-26 12:58:+0200',
             'language': '',
             'mime-version': '1.0',
             'content-transfer-encoding': '8bit'
