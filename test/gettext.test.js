@@ -7,7 +7,8 @@ describe("gettext", function() {
             key: 'key',
             plural: null,
             domain: 'messages',
-            context: ''
+            context: '',
+            category: null
         });
     });
 
@@ -29,7 +30,8 @@ describe("gettext", function() {
                 key: 'key',
                 plural: null,
                 domain: 'messages',
-                context: ''
+                context: '',
+                category: null
             });
         });
     });
@@ -65,7 +67,8 @@ describe("gettext", function() {
                 key: 'key',
                 plural: null,
                 domain: 'domain',
-                context: ''
+                context: '',
+                category: null
             });
         });
     });
@@ -101,7 +104,8 @@ describe("gettext", function() {
                 key: 'key',
                 plural: null,
                 domain: 'domain',
-                context: ''
+                context: '',
+                category: null
             });
         });
     });
@@ -137,7 +141,8 @@ describe("gettext", function() {
                 key: 'key',
                 plural: 'plural',
                 domain: 'messages',
-                context: ''
+                context: '',
+                category: null
             });
         });
     });
@@ -188,7 +193,8 @@ describe("gettext", function() {
                     key: 'key',
                     plural: 'plural',
                     domain: 'domain',
-                    context: ''
+                    context: '',
+                    category: null
                 });
         });
     });
@@ -243,7 +249,8 @@ describe("gettext", function() {
                     key: 'key',
                     plural: 'plural',
                     domain: 'domain',
-                    context: ''
+                    context: '',
+                    category: null
                 });
         });
     });
@@ -279,7 +286,8 @@ describe("gettext", function() {
                 key: 'key',
                 plural: null,
                 domain: 'messages',
-                context: 'context'
+                context: 'context',
+                category: null
             });
         });
     });
@@ -328,7 +336,8 @@ describe("gettext", function() {
                 key: 'key',
                 plural: null,
                 domain: 'domain',
-                context: 'context'
+                context: 'context',
+                category: null
             });
         });
     });
@@ -379,7 +388,8 @@ describe("gettext", function() {
                     key: 'key',
                     plural: 'plural',
                     domain: 'messages',
-                    context: 'context'
+                    context: 'context',
+                    category: null
                 });
         });
     });
@@ -448,7 +458,8 @@ describe("gettext", function() {
                     key: 'key',
                     plural: 'plural',
                     domain: 'domain',
-                    context: 'context'
+                    context: 'context',
+                    category: null
                 });
         });
     });
@@ -517,7 +528,8 @@ describe("gettext", function() {
                     key: 'key',
                     plural: 'plural',
                     domain: 'domain',
-                    context: 'context'
+                    context: 'context',
+                    category: null
                 });
         });
     });
