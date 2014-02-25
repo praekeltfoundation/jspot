@@ -10,6 +10,7 @@ describe("extract", function() {
                 plural: null,
                 domain: 'messages',
                 context: '',
+                category: null,
                 line: 1,
                 filename: ''
             }]);
@@ -23,6 +24,7 @@ describe("extract", function() {
                 plural: null,
                 domain: 'messages',
                 context: '',
+                category: null,
                 line: 1,
                 filename: ''
             }]);
@@ -57,6 +59,7 @@ describe("extract", function() {
                 plural: null,
                 domain: 'messages',
                 context: '',
+                category: null,
                 line: 2,
                 filename: ''
             }, {
@@ -64,6 +67,7 @@ describe("extract", function() {
                 plural: null,
                 domain: 'messages',
                 context: '',
+                category: null,
                 line: 3,
                 filename: ''
             }, {
@@ -71,6 +75,7 @@ describe("extract", function() {
                 plural: null,
                 domain: 'messages',
                 context: '',
+                category: null,
                 line: 4,
                 filename: ''
             }, {
@@ -78,6 +83,7 @@ describe("extract", function() {
                 plural: null,
                 domain: 'messages',
                 context: '',
+                category: null,
                 line: 5,
                 filename: ''
             }, {
@@ -85,6 +91,7 @@ describe("extract", function() {
                 plural: null,
                 domain: 'messages',
                 context: '',
+                category: null,
                 line: 6,
                 filename: '',
             }]);
@@ -109,6 +116,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 2,
                     filename: ''
                 }, {
@@ -116,6 +124,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 3,
                     filename: ''
                 }, {
@@ -123,6 +132,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 4,
                     filename: ''
                 }, {
@@ -130,6 +140,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 5,
                     filename: ''
                 }, {
@@ -137,6 +148,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 6,
                     filename: ''
                 }, {
@@ -144,6 +156,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 7,
                     filename: ''
                 }, {
@@ -151,6 +164,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 8,
                     filename: ''
                 }]);
@@ -169,6 +183,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 2,
                     filename: '',
                 }, {
@@ -176,6 +191,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 3,
                     filename: '',
                 }]);
@@ -194,6 +210,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 2,
                     filename: '',
                 }, {
@@ -201,6 +218,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 3,
                     filename: '',
                 }]);
@@ -219,6 +237,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 2,
                     filename: '',
                 }, {
@@ -226,6 +245,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 3,
                     filename: '',
                 }]);
@@ -251,6 +271,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 2,
                     filename: '',
                 }, {
@@ -258,6 +279,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 3,
                     filename: '',
                 }, {
@@ -265,6 +287,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 4,
                     filename: '',
                 }, {
@@ -272,6 +295,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 5,
                     filename: '',
                 }, {
@@ -279,6 +303,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 6,
                     filename: '',
                 }, {
@@ -286,6 +311,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 7,
                     filename: '',
                 }, {
@@ -293,6 +319,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 8,
                     filename: '',
                 }]);
@@ -311,6 +338,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 2,
                     filename: ''
                 }, {
@@ -318,6 +346,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 3,
                     filename: ''
                 }]);
@@ -336,6 +365,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 2,
                     filename: ''
                 }, {
@@ -343,6 +373,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 3,
                     filename: ''
                 }]);
@@ -361,6 +392,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 2,
                     filename: ''
                 }, {
@@ -368,6 +400,7 @@ describe("extract", function() {
                     plural: null,
                     domain: 'messages',
                     context: '',
+                    category: null,
                     line: 3,
                     filename: ''
                 }]);

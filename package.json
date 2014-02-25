@@ -27,6 +27,7 @@
   "dependencies": {
     "underscore": "~1.6.0",
     "falafel": "~0.3.1",
-    "nomnom": "~1.6.2"
+    "nomnom": "~1.6.2",
+    "moment": "~2.5.1"
   }
 }

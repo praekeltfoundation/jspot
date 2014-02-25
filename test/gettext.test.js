@@ -7,7 +7,8 @@ describe("gettext", function() {
             key: 'key',
             plural: null,
             domain: 'messages',
-            context: ''
+            context: '',
+            category: null
         });
     });
 
@@ -24,12 +25,13 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
-        it("should return the call's gettext data", function() {
+        it("should return the gettext call's data", function() {
             assert.deepEqual(gettext.gettext('key'), {
                 key: 'key',
                 plural: null,
                 domain: 'messages',
-                context: ''
+                context: '',
+                category: null
             });
         });
     });
@@ -60,12 +62,13 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
-        it("should return the call's gettext data", function() {
+        it("should return the dgettext call's data", function() {
             assert.deepEqual(gettext.dgettext('domain', 'key'), {
                 key: 'key',
                 plural: null,
                 domain: 'domain',
-                context: ''
+                context: '',
+                category: null
             });
         });
     });
@@ -96,12 +99,26 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
-        it("should return the call's gettext data", function() {
+        it("should throw an error if the category param is unusable",
+        function() {
+            assert.throws(
+                function() {
+                    gettext.dcgettext('domain', 'key', null);
+                },
+                new RegExp([
+                    "dcgettext was given a value of type 'object'",
+                    "instead of a string or number for parameter",
+                    "'category': null"
+                ].join(' ')));
+        });
+
+        it("should return the dcgettext call's data", function() {
             assert.deepEqual(gettext.dcgettext('domain', 'key', 'category'), {
                 key: 'key',
                 plural: null,
                 domain: 'domain',
-                context: ''
+                context: '',
+                category: null
             });
         });
     });
@@ -132,12 +149,13 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
-        it("should return the call's gettext data", function() {
+        it("should return the ngettext call's data", function() {
             assert.deepEqual(gettext.ngettext('key', 'plural', 'value'), {
                 key: 'key',
                 plural: 'plural',
                 domain: 'messages',
-                context: ''
+                context: '',
+                category: null
             });
         });
     });
@@ -181,14 +199,15 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
-        it("should return the call's gettext data", function() {
+        it("should return the dngettext call's data", function() {
             assert.deepEqual(
                 gettext.dngettext('domain', 'key', 'plural', 'value'),
                 {
                     key: 'key',
                     plural: 'plural',
                     domain: 'domain',
-                    context: ''
+                    context: '',
+                    category: null
                 });
         });
     });
@@ -235,7 +254,21 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
-        it("should return the call's gettext data", function() {
+        it("should throw an error if the category param is unusable",
+        function() {
+            assert.throws(
+                function() {
+                    gettext.dcngettext(
+                        'domain', 'key', 'plural', 'value', null);
+                },
+                new RegExp([
+                    "dcngettext was given a value of type 'object'",
+                    "instead of a string or number for parameter",
+                    "'category': null"
+                ].join(' ')));
+        });
+
+        it("should return the dcngettext call's data", function() {
             assert.deepEqual(
                 gettext.dcngettext(
                     'domain', 'key', 'plural', 'value', 'category'),
@@ -243,7 +276,8 @@ describe("gettext", function() {
                     key: 'key',
                     plural: 'plural',
                     domain: 'domain',
-                    context: ''
+                    context: '',
+                    category: null
                 });
         });
     });
@@ -274,12 +308,13 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
-        it("should return the call's gettext data", function() {
+        it("should return the pgettext call's data", function() {
             assert.deepEqual(gettext.pgettext('context', 'key'), {
                 key: 'key',
                 plural: null,
                 domain: 'messages',
-                context: 'context'
+                context: 'context',
+                category: null
             });
         });
     });
@@ -323,12 +358,13 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
-        it("should return the call's gettext data", function() {
+        it("should return the dpgettext call's data", function() {
             assert.deepEqual(gettext.dpgettext('domain', 'context', 'key'), {
                 key: 'key',
                 plural: null,
                 domain: 'domain',
-                context: 'context'
+                context: 'context',
+                category: null
             });
         });
     });
@@ -372,14 +408,15 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
-        it("should return the call's gettext data", function() {
+        it("should return the npgettext call's data", function() {
             assert.deepEqual(
                 gettext.npgettext('context', 'key', 'plural', 'value'),
                 {
                     key: 'key',
                     plural: 'plural',
                     domain: 'messages',
-                    context: 'context'
+                    context: 'context',
+                    category: null
                 });
         });
     });
@@ -440,7 +477,7 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
-        it("should return the call's gettext data", function() {
+        it("should return the dnpgettext call's data", function() {
             assert.deepEqual(
                 gettext.dnpgettext(
                     'domain', 'context', 'key', 'plural', 'value'),
@@ -448,7 +485,8 @@ describe("gettext", function() {
                     key: 'key',
                     plural: 'plural',
                     domain: 'domain',
-                    context: 'context'
+                    context: 'context',
+                    category: null
                 });
         });
     });
@@ -509,7 +547,21 @@ describe("gettext", function() {
                 ].join(' ')));
         });
 
-        it("should return the call's gettext data", function() {
+        it("should throw an error if the category param is unusable",
+        function() {
+            assert.throws(
+                function() {
+                    gettext.dcnpgettext(
+                        'domain', 'context', 'key', 'plural', 'value', null);
+                },
+                new RegExp([
+                    "dcnpgettext was given a value of type 'object'",
+                    "instead of a string or number for parameter",
+                    "'category': null"
+                ].join(' ')));
+        });
+
+        it("should return the dcnpgettext call's data", function() {
             assert.deepEqual(
                 gettext.dcnpgettext(
                     'domain', 'context', 'key', 'plural', 'value', 'category'),
@@ -517,7 +569,8 @@ describe("gettext", function() {
                     key: 'key',
                     plural: 'plural',
                     domain: 'domain',
-                    context: 'context'
+                    context: 'context',
+                    category: null
                 });
         });
     });
