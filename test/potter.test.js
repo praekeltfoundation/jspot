@@ -101,7 +101,7 @@ describe("potter", function() {
         assert.deepEqual(pots.messages.translations[''].foo, {
             msgid: 'foo',
             msgstr: [''],
-            msgctx: '',
+            msgctxt: '',
             comments: {reference: 'ham.js:1'}
         });
 
@@ -109,7 +109,7 @@ describe("potter", function() {
             msgid: 'bar',
             msgid_plural: 'bars',
             msgstr: ['', ''],
-            msgctx: 'lark',
+            msgctxt: 'lark',
             comments: {reference: 'spam.js:2'}
         });
     });
@@ -122,7 +122,7 @@ describe("potter", function() {
                         foo: {
                             msgid: 'foo',
                             msgstr: [''],
-                            msgctx: '',
+                            msgctxt: '',
                             comments: {reference: 'lamb.js:3'}
                         }
                     },
@@ -135,7 +135,7 @@ describe("potter", function() {
                             msgid: 'bar',
                             msgid_plural: 'bars',
                             msgstr: ['', ''],
-                            msgctx: 'lark',
+                            msgctxt: 'lark',
                             comments: {reference: 'ram.js:4'}
                         }
                     }
@@ -162,7 +162,7 @@ describe("potter", function() {
         assert.deepEqual(pots.messages.translations[''].foo, {
             msgid: 'foo',
             msgstr: [''],
-            msgctx: '',
+            msgctxt: '',
             comments: {reference: 'lamb.js:3 ham.js:1'}
         });
 
@@ -170,7 +170,7 @@ describe("potter", function() {
             msgid: 'bar',
             msgid_plural: 'bars',
             msgstr: ['', ''],
-            msgctx: 'lark',
+            msgctxt: 'lark',
             comments: {reference: 'ram.js:4 spam.js:2'}
         });
     });
@@ -183,7 +183,7 @@ describe("potter", function() {
                         foo: {
                             msgid: 'foo',
                             msgstr: [''],
-                            msgctx: '',
+                            msgctxt: '',
                             comments: {reference: 'lamb.js:3 ham.js:1'}
                         }
                     },
@@ -203,7 +203,7 @@ describe("potter", function() {
         assert.deepEqual(pots.messages.translations[''].foo, {
             msgid: 'foo',
             msgstr: [''],
-            msgctx: '',
+            msgctxt: '',
             comments: {reference: 'lamb.js:3 ham.js:1'}
         });
     });
