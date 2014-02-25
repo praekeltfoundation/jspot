@@ -40,8 +40,7 @@ describe('cli', function() {
         function() {
             cli.parse([
                 'extract',
-                '-t',
-                tmpdir,
+                '-t', tmpdir,
                 './test/fixtures/extract/simple/input/a.js',
                 './test/fixtures/extract/simple/input/b.js'
             ]);
@@ -51,7 +50,21 @@ describe('cli', function() {
                 './test/fixtures/extract/simple/output/messages.pot');
         });
 
-        it("should allow the keyword option to be configurable");
+        it("should allow the keyword option to be configurable", function() {
+            cli.parse([
+                'extract',
+                '-k', '_',
+                '-t', tmpdir,
+                './test/fixtures/extract/keyword/input/a.js',
+                './test/fixtures/extract/keyword/input/b.js'
+            ]);
+
+            assert_files_equal(
+                path.join(tmpdir, 'messages.pot'),
+                './test/fixtures/extract/keyword/output/messages.pot');
+        });
+
         it("should support multiple domains");
+        it("should support multiple contexts");
     });
 });
