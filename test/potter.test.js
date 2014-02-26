@@ -13,7 +13,6 @@ describe("potter", function() {
     after(function() {
         _.now = now;
     });
-
     it("should create a new domain pot if none currently exists", function() {
         var pots = {error: {}};
 
@@ -31,7 +30,7 @@ describe("potter", function() {
             domain: 'lerps',
             line: 2,
             filename: 'spam.js'
-        }], pots);
+        }], {pots: pots});
 
         assert('translations' in pots.messages);
         assert.equal(pots.messages.charset, 'utf-8');
@@ -58,6 +57,25 @@ describe("potter", function() {
             'content-type': 'text/plain; charset=utf-8',
             'content-transfer-encoding': '8bit'
         });
+    });
+
+    it("should allow the new pots' headers to be configurable", function() {
+        var pots = potter([{
+            key: 'foo',
+            plural: null,
+            context: '',
+            domain: 'messages',
+            line: 1,
+            filename: 'ham.js'
+        }], {
+            headers: {
+                'language': 'en',
+                'project-id-version': '0.1.0'
+            }
+        });
+
+        assert.deepEqual(pots.messages.headers.language, 'en');
+        assert.deepEqual(pots.messages.headers['project-id-version'], '0.1.0');
     });
 
     it("should create a new context if none currently exists", function() {
@@ -157,7 +175,7 @@ describe("potter", function() {
             domain: 'lerps',
             line: 2,
             filename: 'spam.js'
-        }], pots);
+        }], {pots: pots});
 
         assert.deepEqual(pots.messages.translations[''].foo, {
             msgid: 'foo',
@@ -198,7 +216,7 @@ describe("potter", function() {
             domain: 'messages',
             line: 1,
             filename: 'ham.js'
-        }], pots);
+        }], {pots:pots});
 
         assert.deepEqual(pots.messages.translations[''].foo, {
             msgid: 'foo',
