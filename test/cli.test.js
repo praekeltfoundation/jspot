@@ -10,6 +10,8 @@ describe('cli', function() {
     var now = _.now;
     var tmpdir;
 
+    tmp.setGracefulCleanup();
+
     before(function() {
         _.now = _.constant(1393369106938);
     });
@@ -19,7 +21,10 @@ describe('cli', function() {
     });
 
     beforeEach(function(done) {
-        tmp.dir(function(err, dirname) {
+        tmp.dir({
+            unsafeCleanup: true,
+            prefix: 'jspot-test-',
+        }, function(err, dirname) {
             if (err) {
                 done(err);
             }
