@@ -1,0 +1,20 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2014-02-26 12:58:+0200\n"
+"Project-Id-Version: PACKAGE VERSION\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+
+#: ./test/fixtures/extract/contexts/input/a.js:1
+msgctxt "foo"
+msgid "hello"
+msgstr ""
+
+#: ./test/fixtures/extract/contexts/input/b.js:1
+msgctxt "bar"
+msgid "goodbye"
+msgstr ""

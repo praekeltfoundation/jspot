@@ -13,7 +13,6 @@ describe("potter", function() {
     after(function() {
         _.now = now;
     });
-
     it("should create a new domain pot if none currently exists", function() {
         var pots = {error: {}};
 
@@ -31,16 +30,18 @@ describe("potter", function() {
             domain: 'lerps',
             line: 2,
             filename: 'spam.js'
-        }], pots);
+        }], {pots: pots});
 
         assert('translations' in pots.messages);
         assert.equal(pots.messages.charset, 'utf-8');
         assert.deepEqual(pots.messages.headers, {
             'project-id-version': 'PACKAGE VERSION',
             'language-team': 'LANGUAGE <LL@li.org>',
-            'po-revision-date': '2014-02-26 12:58:+0200',
+            'po-revision-date': 'YEAR-MO-DA HO:MI+ZONE',
+            'pot-creation-date': '2014-02-26 12:58:+0200',
             'language': '',
             'mime-version': '1.0',
+            'content-type': 'text/plain; charset=utf-8',
             'content-transfer-encoding': '8bit'
         });
 
@@ -49,11 +50,32 @@ describe("potter", function() {
         assert.deepEqual(pots.lerps.headers, {
             'project-id-version': 'PACKAGE VERSION',
             'language-team': 'LANGUAGE <LL@li.org>',
-            'po-revision-date': '2014-02-26 12:58:+0200',
+            'po-revision-date': 'YEAR-MO-DA HO:MI+ZONE',
+            'pot-creation-date': '2014-02-26 12:58:+0200',
             'language': '',
             'mime-version': '1.0',
+            'content-type': 'text/plain; charset=utf-8',
             'content-transfer-encoding': '8bit'
         });
+    });
+
+    it("should allow the new pots' headers to be configurable", function() {
+        var pots = potter([{
+            key: 'foo',
+            plural: null,
+            context: '',
+            domain: 'messages',
+            line: 1,
+            filename: 'ham.js'
+        }], {
+            headers: {
+                'language': 'en',
+                'project-id-version': '0.1.0'
+            }
+        });
+
+        assert.deepEqual(pots.messages.headers.language, 'en');
+        assert.deepEqual(pots.messages.headers['project-id-version'], '0.1.0');
     });
 
     it("should create a new context if none currently exists", function() {
@@ -97,7 +119,7 @@ describe("potter", function() {
         assert.deepEqual(pots.messages.translations[''].foo, {
             msgid: 'foo',
             msgstr: [''],
-            msgctx: '',
+            msgctxt: '',
             comments: {reference: 'ham.js:1'}
         });
 
@@ -105,7 +127,7 @@ describe("potter", function() {
             msgid: 'bar',
             msgid_plural: 'bars',
             msgstr: ['', ''],
-            msgctx: 'lark',
+            msgctxt: 'lark',
             comments: {reference: 'spam.js:2'}
         });
     });
@@ -118,7 +140,7 @@ describe("potter", function() {
                         foo: {
                             msgid: 'foo',
                             msgstr: [''],
-                            msgctx: '',
+                            msgctxt: '',
                             comments: {reference: 'lamb.js:3'}
                         }
                     },
@@ -131,7 +153,7 @@ describe("potter", function() {
                             msgid: 'bar',
                             msgid_plural: 'bars',
                             msgstr: ['', ''],
-                            msgctx: 'lark',
+                            msgctxt: 'lark',
                             comments: {reference: 'ram.js:4'}
                         }
                     }
@@ -153,12 +175,12 @@ describe("potter", function() {
             domain: 'lerps',
             line: 2,
             filename: 'spam.js'
-        }], pots);
+        }], {pots: pots});
 
         assert.deepEqual(pots.messages.translations[''].foo, {
             msgid: 'foo',
             msgstr: [''],
-            msgctx: '',
+            msgctxt: '',
             comments: {reference: 'lamb.js:3 ham.js:1'}
         });
 
@@ -166,7 +188,7 @@ describe("potter", function() {
             msgid: 'bar',
             msgid_plural: 'bars',
             msgstr: ['', ''],
-            msgctx: 'lark',
+            msgctxt: 'lark',
             comments: {reference: 'ram.js:4 spam.js:2'}
         });
     });
@@ -179,7 +201,7 @@ describe("potter", function() {
                         foo: {
                             msgid: 'foo',
                             msgstr: [''],
-                            msgctx: '',
+                            msgctxt: '',
                             comments: {reference: 'lamb.js:3 ham.js:1'}
                         }
                     },
@@ -194,12 +216,12 @@ describe("potter", function() {
             domain: 'messages',
             line: 1,
             filename: 'ham.js'
-        }], pots);
+        }], {pots:pots});
 
         assert.deepEqual(pots.messages.translations[''].foo, {
             msgid: 'foo',
             msgstr: [''],
-            msgctx: '',
+            msgctxt: '',
             comments: {reference: 'lamb.js:3 ham.js:1'}
         });
     });
