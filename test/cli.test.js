@@ -98,5 +98,19 @@ describe('cli', function() {
                 path.join(tmpdir, 'messages.pot'),
                 './test/fixtures/extract/contexts/output/messages.pot');
         });
+
+        it("should support configurable pot headers", function() {
+            cli.parse([
+                'extract',
+                '--header=language:en',
+                '--header=project-id-version:0.1.0',
+                '-t', tmpdir,
+                './test/fixtures/extract/headers/input/a.js',
+            ]);
+
+            assert_files_equal(
+                path.join(tmpdir, 'messages.pot'),
+                './test/fixtures/extract/headers/output/messages.pot');
+        });
     });
 });
