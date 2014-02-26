@@ -103,7 +103,7 @@ describe('cli', function() {
             cli.parse([
                 'extract',
                 '--header=language:en',
-                '--header=project-id-version:0.1.0',
+                '--header=project-id-version:0:1:0',
                 '-t', tmpdir,
                 './test/fixtures/extract/headers/input/a.js',
             ]);
