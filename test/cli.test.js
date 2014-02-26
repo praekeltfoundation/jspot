@@ -75,6 +75,10 @@ describe('cli', function() {
             assert_files_equal(
                 path.join(tmpdir, 'messages.pot'),
                 './test/fixtures/extract/domains/output/messages.pot');
+
+            assert_files_equal(
+                path.join(tmpdir, 'error.pot'),
+                './test/fixtures/extract/domains/output/error.pot');
         });
 
         it("should support multiple contexts", function() {
