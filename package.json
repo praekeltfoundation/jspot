@@ -1,8 +1,11 @@
 {
-  "name": "potjs",
-  "version": "0.0.0",
+  "name": "jspot",
+  "version": "0.1.0",
   "description": "Extracts gettext strings from Javascript files into pot files",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
+  "bin": {
+    "jspot": "./lib/cli.js"
+  },
   "scripts": {
     "test": "./utils/test.sh test/"
   },
@@ -29,6 +32,7 @@
     "underscore": "~1.6.0",
     "falafel": "~0.3.1",
     "nomnom": "~1.6.2",
-    "moment": "~2.5.1"
+    "moment": "~2.5.1",
+    "gettext-parser": "~0.2.0"
   }
 }
