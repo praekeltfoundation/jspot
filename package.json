@@ -1,6 +1,6 @@
 {
   "name": "jspot",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Extracts gettext strings from Javascript files into pot files",
   "main": "./lib/index.js",
   "bin": {
