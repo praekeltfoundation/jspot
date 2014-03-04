@@ -113,4 +113,23 @@ describe('cli', function() {
                 './test/fixtures/extract/headers/output/messages.pot');
         });
     });
+
+    describe('json', function() {
+        it("should convert the po files to json files", function() {
+            cli.parse([
+                'json',
+                '-t', tmpdir,
+                './test/fixtures/json/simple/input/error.po',
+                './test/fixtures/json/simple/input/messages.po'
+            ]);
+
+            assert_files_equal(
+                path.join(tmpdir, 'error.json'),
+                './test/fixtures/json/simple/output/error.json');
+
+            assert_files_equal(
+                path.join(tmpdir, 'messages.json'),
+                './test/fixtures/json/simple/output/messages.json');
+        });
+    });
 });
