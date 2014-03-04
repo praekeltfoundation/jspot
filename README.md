@@ -17,15 +17,16 @@ _.ngettext('bar', 'bars');
 # npm install -g jspot
 ```
 
-## Usage
+## How to use
 
 ```
-$ jspot --help              
+$ jspot --help                      
 
 Usage: jspot <command>
 
 command     
   extract     Extract source from javascript files into pot files
+  json        Convert po files to Jed-compatible json files (using po2json)
 
 $ jspot extract --help
 
