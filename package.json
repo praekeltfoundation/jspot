@@ -1,6 +1,6 @@
 {
   "name": "jspot",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Extracts gettext strings from Javascript files into pot files",
   "main": "./lib/index.js",
   "bin": {
@@ -10,6 +10,9 @@
     "test": "./utils/test.sh test/"
   },
   "keywords": [
+    "xgettext",
+    "internationalization",
+    "i18n",
     "gettext",
     "po",
     "pot"
