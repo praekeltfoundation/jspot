@@ -115,8 +115,7 @@ describe('cli', function() {
     });
 
     describe('json', function() {
-        it("should convert the po files to json files",
-        function() {
+        it("should convert the po files to json files", function() {
             cli.parse([
                 'json',
                 '-t', tmpdir,
