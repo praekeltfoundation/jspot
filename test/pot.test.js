@@ -1,9 +1,9 @@
 var _ = require('underscore');
 var assert = require('assert');
-var potter = require('../lib/potter');
+var pot = require('../lib/pot');
 
 
-describe("potter", function() {
+describe("pot", function() {
     var now = _.now;
 
     before(function() {
@@ -16,7 +16,7 @@ describe("potter", function() {
     it("should create a new domain pot if none currently exists", function() {
         var pots = {error: {}};
 
-        potter([{
+        pot([{
             key: 'foo',
             plural: null,
             context: '',
@@ -60,7 +60,7 @@ describe("potter", function() {
     });
 
     it("should allow the new pots' headers to be configurable", function() {
-        var pots = potter([{
+        var pots = pot([{
             key: 'foo',
             plural: null,
             context: '',
@@ -79,7 +79,7 @@ describe("potter", function() {
     });
 
     it("should create a new context if none currently exists", function() {
-        var pots = potter([{
+        var pots = pot([{
             key: 'foo',
             plural: null,
             context: '',
@@ -100,7 +100,7 @@ describe("potter", function() {
     });
 
     it("should create a new translation if none currently exists", function() {
-        var pots = potter([{
+        var pots = pot([{
             key: 'foo',
             plural: null,
             context: '',
@@ -161,7 +161,7 @@ describe("potter", function() {
             }
         };
 
-        potter([{
+        pot([{
             key: 'foo',
             plural: null,
             context: '',
@@ -209,7 +209,7 @@ describe("potter", function() {
             }
         };
 
-        potter([{
+        pot([{
             key: 'foo',
             plural: null,
             context: '',
