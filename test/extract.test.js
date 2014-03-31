@@ -406,4 +406,152 @@ describe("extract", function() {
                 }]);
         });
     });
+
+
+    describe("gettext.ngettext", function() {
+        it("should extract member calls", function() {
+            assert.deepEqual(
+                extract([
+                    "function luke() {",
+                    "    this.gettext.ngettext('foo', 'foos', 6);",
+                    "    thing.gettext.ngettext('bar', 'bars', 6);",
+                    "    thing.gettext.ngettext.call(null, 'baz', 'bazs', 6);",
+                    "    thing.gettext.ngettext.apply(null, ['qux', 'quxs', 6]);",
+                    "    thing.subthing.gettext.ngettext('corge', 'corges', 6);",
+                    "    thing.subthing.gettext.ngettext.call(null, 'grault', 'graults', 6);",
+                    "    thing.subthing.gettext.ngettext.apply(null, ['garply', 'garplies', 6]);",
+                    "}"
+                ].join('\n')),
+                [{
+                    key: 'foo',
+                    plural: 'foos',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: '',
+                }, {
+                    key: 'bar',
+                    plural: 'bars',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: '',
+                }, {
+                    key: 'baz',
+                    plural: 'bazs',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 4,
+                    filename: '',
+                }, {
+                    key: 'qux',
+                    plural: 'quxs',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 5,
+                    filename: '',
+                }, {
+                    key: 'corge',
+                    plural: 'corges',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 6,
+                    filename: '',
+                }, {
+                    key: 'grault',
+                    plural: 'graults',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 7,
+                    filename: '',
+                }, {
+                    key: 'garply',
+                    plural: 'garplies',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 8,
+                    filename: '',
+                }]);
+        });
+
+        it("should extract event if value is a variable", function() {
+            assert.deepEqual(
+                extract([
+                    "function luke() {",
+                    "    this.gettext.ngettext('foo', 'foos', length);",
+                    "    thing.gettext.ngettext('bar', 'bars', length);",
+                    "    thing.gettext.ngettext.call(null, 'baz', 'bazs', length);",
+                    "    thing.gettext.ngettext.apply(null, ['qux', 'quxs', length]);",
+                    "    thing.subthing.gettext.ngettext('corge', 'corges', length);",
+                    "    thing.subthing.gettext.ngettext.call(null, 'grault', 'graults', length);",
+                    "    thing.subthing.gettext.ngettext.apply(null, ['garply', 'garplies', length]);",
+                    "}"
+                ].join('\n')),
+                [{
+                    key: 'foo',
+                    plural: 'foos',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: '',
+                }, {
+                    key: 'bar',
+                    plural: 'bars',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: '',
+                }, {
+                    key: 'baz',
+                    plural: 'bazs',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 4,
+                    filename: '',
+                }, {
+                    key: 'qux',
+                    plural: 'quxs',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 5,
+                    filename: '',
+                }, {
+                    key: 'corge',
+                    plural: 'corges',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 6,
+                    filename: '',
+                }, {
+                    key: 'grault',
+                    plural: 'graults',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 7,
+                    filename: '',
+                }, {
+                    key: 'garply',
+                    plural: 'garplies',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 8,
+                    filename: '',
+                }]);
+        });
+
+    });
 });

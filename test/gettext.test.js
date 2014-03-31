@@ -158,6 +158,17 @@ describe("gettext", function() {
                 category: null
             });
         });
+
+        it("should return the ngettext call's data event if value is variable", function() {
+            var length = 6;
+            assert.deepEqual(gettext.ngettext('key', 'plural', length), {
+                key: 'key',
+                plural: 'plural',
+                domain: 'messages',
+                context: '',
+                category: null
+            });
+        });
     });
 
     describe(".dngettext", function() {
