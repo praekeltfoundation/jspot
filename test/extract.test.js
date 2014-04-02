@@ -481,7 +481,7 @@ describe("extract", function() {
                 }]);
         });
 
-        it("should extract event if value is a variable", function() {
+        it("should extract even if value is a variable", function() {
             assert.deepEqual(
                 extract([
                     "function luke() {",
