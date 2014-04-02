@@ -42,6 +42,18 @@ describe("extract", function() {
         /on line 2 of file 'foo.js'/);
     });
 
+    it("throw error with identifier instead of singular string key", function() {
+        assert.throws(function() {
+            extract([
+                "function palpatine() {",
+                "    gettext(foo);",
+                "}"
+            ].join('\n'),
+            {filename: 'foo.js'});
+        },
+        /on line 2 of file 'foo.js'/);
+    });
+
     it("should allow a different keyword to be used", function() {
         assert.deepEqual(
             extract([
