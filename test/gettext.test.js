@@ -159,7 +159,7 @@ describe("gettext", function() {
             });
         });
 
-        it("should return the ngettext call's data event if value is variable", function() {
+        it("should return the ngettext call's data even if value is variable", function() {
             var length = 6;
             assert.deepEqual(gettext.ngettext('key', 'plural', length), {
                 key: 'key',
