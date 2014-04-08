@@ -1,16 +1,13 @@
 var _ = require('underscore');
-var fs = require('fs');
 var path = require('path');
-var assert = require('assert');
-var tmp = require('tmp');
+
 var cli = require('../lib/cli');
+var helpers = require('./helpers');
 
 
 describe('cli', function() {
     var now = _.now;
     var tmpdir;
-
-    tmp.setGracefulCleanup();
 
     before(function() {
         _.now = _.constant(1393369106938);
@@ -21,24 +18,11 @@ describe('cli', function() {
     });
 
     beforeEach(function(done) {
-        tmp.dir({
-            unsafeCleanup: true,
-            prefix: 'jspot-test-',
-        }, function(err, dirname) {
-            if (err) {
-                done(err);
-            }
-
+        helpers.tmpdir(function(err, dirname) {
             tmpdir = dirname;
             done();
         });
     });
-
-    function assert_files_equal(actual_path, expected_path) {
-        var actual = fs.readFileSync(path.resolve(actual_path));
-        var expected = fs.readFileSync(path.resolve(expected_path));
-        assert.equal(actual.toString(), expected.toString());
-    }
 
     describe('extract', function() {
         it("should extract gettext strings from source files into pot files",
@@ -50,7 +34,7 @@ describe('cli', function() {
                 './test/fixtures/extract/simple/input/b.js'
             ]);
 
-            assert_files_equal(
+            helpers.assert_files_equal(
                 path.join(tmpdir, 'messages.pot'),
                 './test/fixtures/extract/simple/output/messages.pot');
         });
@@ -64,7 +48,7 @@ describe('cli', function() {
                 './test/fixtures/extract/keyword/input/b.js'
             ]);
 
-            assert_files_equal(
+            helpers.assert_files_equal(
                 path.join(tmpdir, 'messages.pot'),
                 './test/fixtures/extract/keyword/output/messages.pot');
         });
@@ -77,11 +61,11 @@ describe('cli', function() {
                 './test/fixtures/extract/domains/input/b.js'
             ]);
 
-            assert_files_equal(
+            helpers.assert_files_equal(
                 path.join(tmpdir, 'messages.pot'),
                 './test/fixtures/extract/domains/output/messages.pot');
 
-            assert_files_equal(
+            helpers.assert_files_equal(
                 path.join(tmpdir, 'error.pot'),
                 './test/fixtures/extract/domains/output/error.pot');
         });
@@ -94,7 +78,7 @@ describe('cli', function() {
                 './test/fixtures/extract/contexts/input/b.js'
             ]);
 
-            assert_files_equal(
+            helpers.assert_files_equal(
                 path.join(tmpdir, 'messages.pot'),
                 './test/fixtures/extract/contexts/output/messages.pot');
         });
@@ -108,7 +92,7 @@ describe('cli', function() {
                 './test/fixtures/extract/headers/input/a.js',
             ]);
 
-            assert_files_equal(
+            helpers.assert_files_equal(
                 path.join(tmpdir, 'messages.pot'),
                 './test/fixtures/extract/headers/output/messages.pot');
         });
@@ -123,11 +107,11 @@ describe('cli', function() {
                 './test/fixtures/json/simple/input/messages.po'
             ]);
 
-            assert_files_equal(
+            helpers.assert_files_equal(
                 path.join(tmpdir, 'error.json'),
                 './test/fixtures/json/simple/output/error.json');
 
-            assert_files_equal(
+            helpers.assert_files_equal(
                 path.join(tmpdir, 'messages.json'),
                 './test/fixtures/json/simple/output/messages.json');
         });
