@@ -41,7 +41,7 @@ describe('cli', function() {
     }
 
     describe('extract', function() {
-        it("should extract gettext strings from js files into pot files",
+        it("should extract gettext strings from source files into pot files",
         function() {
             cli.parse([
                 'extract',

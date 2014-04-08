@@ -1,10 +1,16 @@
 var assert = require('assert');
-var extract = require('../lib/extract');
+var jspot = require('../../lib');
 
-describe("extract", function() {
+
+describe("jspot.extractors:js", function() {
+    var extractor = jspot.extractors.get('js');
+
     it("should work with concatenated strings", function() {
         assert.deepEqual(
-            extract("gettext('foo' + 'bar');"),
+            extractor({
+                filename: 'foo.js',
+                source: "gettext('foo' + 'bar');"
+            }),
             [{
                 key: 'foobar',
                 plural: null,
@@ -12,13 +18,16 @@ describe("extract", function() {
                 context: '',
                 category: null,
                 line: 1,
-                filename: ''
+                filename: 'foo.js'
             }]);
     });
 
     it("should work with array joined strings", function() {
         assert.deepEqual(
-            extract("gettext(['foo', 'bar'].join(' '));"),
+            extractor({
+                filename: 'foo.js',
+                source: "gettext(['foo', 'bar'].join(' '));"
+            }),
             [{
                 key: 'foo bar',
                 plural: null,
@@ -26,46 +35,53 @@ describe("extract", function() {
                 context: '',
                 category: null,
                 line: 1,
-                filename: ''
+                filename: 'foo.js'
             }]);
     });
 
     it("should show line numbers in errors", function() {
         assert.throws(function() {
-            extract([
-                "function palpatine() {",
-                "    gettext(null);",
-                "}"
-            ].join('\n'),
-            {filename: 'foo.js'});
+            extractor({
+                filename: 'foo.js',
+                source: [
+                    "function palpatine() {",
+                    "    gettext(null);",
+                    "}"
+                ].join('\n'), 
+            });
         },
         /on line 2 of file 'foo.js'/);
     });
 
     it("throw error with identifier instead of singular string key", function() {
         assert.throws(function() {
-            extract([
-                "function palpatine() {",
-                "    gettext(foo);",
-                "}"
-            ].join('\n'),
-            {filename: 'foo.js'});
+            extractor({
+                filename: 'foo.js', 
+                source: [
+                    "function palpatine() {",
+                    "    gettext(foo);",
+                    "}"
+                ].join('\n')
+            });
         },
         /on line 2 of file 'foo.js'/);
     });
 
     it("should allow a different keyword to be used", function() {
         assert.deepEqual(
-            extract([
-                "function luke() {",
-                "    _('foo');",
-                "    _.gettext('bar');",
-                "    thing._('baz');",
-                "    thing.subthing._('qux');",
-                "    thing.subthing._.gettext('corge');",
-                "}"
-            ].join('\n'),
-            {keyword: '_'}),
+            extractor({
+                keyword: '_',
+                filename: 'foo.js', 
+                source: [
+                    "function luke() {",
+                    "    _('foo');",
+                    "    _.gettext('bar');",
+                    "    thing._('baz');",
+                    "    thing.subthing._('qux');",
+                    "    thing.subthing._.gettext('corge');",
+                    "}"
+                ].join('\n')
+            }),
             [{
                 key: 'foo',
                 plural: null,
@@ -73,7 +89,7 @@ describe("extract", function() {
                 context: '',
                 category: null,
                 line: 2,
-                filename: ''
+                filename: 'foo.js'
             }, {
                 key: 'bar',
                 plural: null,
@@ -81,7 +97,7 @@ describe("extract", function() {
                 context: '',
                 category: null,
                 line: 3,
-                filename: ''
+                filename: 'foo.js'
             }, {
                 key: 'baz',
                 plural: null,
@@ -89,7 +105,7 @@ describe("extract", function() {
                 context: '',
                 category: null,
                 line: 4,
-                filename: ''
+                filename: 'foo.js'
             }, {
                 key: 'qux',
                 plural: null,
@@ -97,7 +113,7 @@ describe("extract", function() {
                 context: '',
                 category: null,
                 line: 5,
-                filename: ''
+                filename: 'foo.js'
             }, {
                 key: 'corge',
                 plural: null,
@@ -105,24 +121,27 @@ describe("extract", function() {
                 context: '',
                 category: null,
                 line: 6,
-                filename: '',
+                filename: 'foo.js',
             }]);
     });
 
     describe("gettext", function() {
-        it("should extract member calls", function() {
+        it("should jspot.extract.raw member calls", function() {
             assert.deepEqual(
-                extract([
-                    "function luke() {",
-                    "    this.gettext('foo');",
-                    "    thing.gettext('bar');",
-                    "    thing.gettext.call(null, 'baz');",
-                    "    thing.gettext.apply(null, ['qux']);",
-                    "    thing.subthing.gettext('corge');",
-                    "    thing.subthing.gettext.call(null, 'grault');",
-                    "    thing.subthing.gettext.apply(null, ['garply']);",
-                    "}"
-                ].join('\n')),
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                        "    this.gettext('foo');",
+                        "    thing.gettext('bar');",
+                        "    thing.gettext.call(null, 'baz');",
+                        "    thing.gettext.apply(null, ['qux']);",
+                        "    thing.subthing.gettext('corge');",
+                        "    thing.subthing.gettext.call(null, 'grault');",
+                        "    thing.subthing.gettext.apply(null, ['garply']);",
+                        "}"
+                    ].join('\n')
+                }),
                 [{
                     key: 'foo',
                     plural: null,
@@ -130,7 +149,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 2,
-                    filename: ''
+                    filename: 'foo.js'
                 }, {
                     key: 'bar',
                     plural: null,
@@ -138,7 +157,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 3,
-                    filename: ''
+                    filename: 'foo.js'
                 }, {
                     key: 'baz',
                     plural: null,
@@ -146,7 +165,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 4,
-                    filename: ''
+                    filename: 'foo.js'
                 }, {
                     key: 'qux',
                     plural: null,
@@ -154,7 +173,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 5,
-                    filename: ''
+                    filename: 'foo.js'
                 }, {
                     key: 'corge',
                     plural: null,
@@ -162,7 +181,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 6,
-                    filename: ''
+                    filename: 'foo.js'
                 }, {
                     key: 'grault',
                     plural: null,
@@ -170,7 +189,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 7,
-                    filename: ''
+                    filename: 'foo.js'
                 }, {
                     key: 'garply',
                     plural: null,
@@ -178,18 +197,21 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 8,
-                    filename: ''
+                    filename: 'foo.js'
                 }]);
         });
 
-        it("should extract direct calls", function() {
+        it("should jspot.extract.raw direct calls", function() {
             assert.deepEqual(
-                extract([
-                    "function luke() {",
-                        "gettext('foo');",
-                        "gettext('bar');",
-                    "}"
-                ].join('\n')),
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                            "gettext('foo');",
+                            "gettext('bar');",
+                        "}"
+                    ].join('\n')
+                }),
                 [{
                     key: 'foo',
                     plural: null,
@@ -197,7 +219,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 2,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'bar',
                     plural: null,
@@ -205,18 +227,21 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 3,
-                    filename: '',
+                    filename: 'foo.js',
                 }]);
         });
 
-        it("should extract '.call' calls", function() {
+        it("should jspot.extract.raw '.call' calls", function() {
             assert.deepEqual(
-                extract([
-                    "function luke() {",
-                        "gettext.call(null, 'foo');",
-                        "gettext.call(null, 'bar');",
-                    "}"
-                ].join('\n')),
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                            "gettext.call(null, 'foo');",
+                            "gettext.call(null, 'bar');",
+                        "}"
+                    ].join('\n')
+                }),
                 [{
                     key: 'foo',
                     plural: null,
@@ -224,7 +249,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 2,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'bar',
                     plural: null,
@@ -232,18 +257,21 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 3,
-                    filename: '',
+                    filename: 'foo.js',
                 }]);
         });
 
-        it("should extract '.apply' calls", function() {
+        it("should jspot.extract.raw '.apply' calls", function() {
             assert.deepEqual(
-                extract([
-                    "function luke() {",
-                        "gettext.apply(null, ['foo']);",
-                        "gettext.apply(null, ['bar']);",
-                    "}"
-                ].join('\n')),
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                            "gettext.apply(null, ['foo']);",
+                            "gettext.apply(null, ['bar']);",
+                        "}"
+                    ].join('\n')
+                }),
                 [{
                     key: 'foo',
                     plural: null,
@@ -251,7 +279,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 2,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'bar',
                     plural: null,
@@ -259,25 +287,28 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 3,
-                    filename: '',
+                    filename: 'foo.js',
                 }]);
         });
     });
 
     describe("gettext.gettext", function() {
-        it("should extract member calls", function() {
+        it("should jspot.extract.raw member calls", function() {
             assert.deepEqual(
-                extract([
-                    "function luke() {",
-                    "    this.gettext.gettext('foo');",
-                    "    thing.gettext.gettext('bar');",
-                    "    thing.gettext.gettext.call(null, 'baz');",
-                    "    thing.gettext.gettext.apply(null, ['qux']);",
-                    "    thing.subthing.gettext.gettext('corge');",
-                    "    thing.subthing.gettext.gettext.call(null, 'grault');",
-                    "    thing.subthing.gettext.gettext.apply(null, ['garply']);",
-                    "}"
-                ].join('\n')),
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                        "    this.gettext.gettext('foo');",
+                        "    thing.gettext.gettext('bar');",
+                        "    thing.gettext.gettext.call(null, 'baz');",
+                        "    thing.gettext.gettext.apply(null, ['qux']);",
+                        "    thing.subthing.gettext.gettext('corge');",
+                        "    thing.subthing.gettext.gettext.call(null, 'grault');",
+                        "    thing.subthing.gettext.gettext.apply(null, ['garply']);",
+                        "}"
+                    ].join('\n')
+                }),
                 [{
                     key: 'foo',
                     plural: null,
@@ -285,7 +316,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 2,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'bar',
                     plural: null,
@@ -293,7 +324,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 3,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'baz',
                     plural: null,
@@ -301,7 +332,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 4,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'qux',
                     plural: null,
@@ -309,7 +340,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 5,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'corge',
                     plural: null,
@@ -317,7 +348,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 6,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'grault',
                     plural: null,
@@ -325,7 +356,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 7,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'garply',
                     plural: null,
@@ -333,18 +364,21 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 8,
-                    filename: '',
+                    filename: 'foo.js',
                 }]);
         });
 
-        it("should extract direct calls", function() {
+        it("should jspot.extract.raw direct calls", function() {
             assert.deepEqual(
-                extract([
-                    "function luke() {",
-                        "gettext.gettext('foo');",
-                        "gettext.gettext('bar');",
-                    "}"
-                ].join('\n')),
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                            "gettext.gettext('foo');",
+                            "gettext.gettext('bar');",
+                        "}"
+                    ].join('\n')
+                }),
                 [{
                     key: 'foo',
                     plural: null,
@@ -352,7 +386,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 2,
-                    filename: ''
+                    filename: 'foo.js'
                 }, {
                     key: 'bar',
                     plural: null,
@@ -360,18 +394,21 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 3,
-                    filename: ''
+                    filename: 'foo.js'
                 }]);
         });
 
-        it("should extract '.call' calls", function() {
+        it("should jspot.extract.raw '.call' calls", function() {
             assert.deepEqual(
-                extract([
-                    "function luke() {",
-                        "gettext.gettext.call(null, 'foo');",
-                        "gettext.gettext.call(null, 'bar');",
-                    "}"
-                ].join('\n')),
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                            "gettext.gettext.call(null, 'foo');",
+                            "gettext.gettext.call(null, 'bar');",
+                        "}"
+                    ].join('\n')
+                }),
                 [{
                     key: 'foo',
                     plural: null,
@@ -379,7 +416,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 2,
-                    filename: ''
+                    filename: 'foo.js'
                 }, {
                     key: 'bar',
                     plural: null,
@@ -387,18 +424,21 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 3,
-                    filename: ''
+                    filename: 'foo.js'
                 }]);
         });
 
-        it("should extract '.apply' calls", function() {
+        it("should jspot.extract.raw '.apply' calls", function() {
             assert.deepEqual(
-                extract([
-                    "function luke() {",
-                        "gettext.gettext.apply(null, ['foo']);",
-                        "gettext.gettext.apply(null, ['bar']);",
-                    "}"
-                ].join('\n')),
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                            "gettext.gettext.apply(null, ['foo']);",
+                            "gettext.gettext.apply(null, ['bar']);",
+                        "}"
+                    ].join('\n')
+                }),
                 [{
                     key: 'foo',
                     plural: null,
@@ -406,7 +446,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 2,
-                    filename: ''
+                    filename: 'foo.js'
                 }, {
                     key: 'bar',
                     plural: null,
@@ -414,26 +454,29 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 3,
-                    filename: ''
+                    filename: 'foo.js'
                 }]);
         });
     });
 
 
     describe("gettext.ngettext", function() {
-        it("should extract member calls", function() {
+        it("should jspot.extract.raw member calls", function() {
             assert.deepEqual(
-                extract([
-                    "function luke() {",
-                    "    this.gettext.ngettext('foo', 'foos', 6);",
-                    "    thing.gettext.ngettext('bar', 'bars', 6);",
-                    "    thing.gettext.ngettext.call(null, 'baz', 'bazs', 6);",
-                    "    thing.gettext.ngettext.apply(null, ['qux', 'quxs', 6]);",
-                    "    thing.subthing.gettext.ngettext('corge', 'corges', 6);",
-                    "    thing.subthing.gettext.ngettext.call(null, 'grault', 'graults', 6);",
-                    "    thing.subthing.gettext.ngettext.apply(null, ['garply', 'garplies', 6]);",
-                    "}"
-                ].join('\n')),
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                        "    this.gettext.ngettext('foo', 'foos', 6);",
+                        "    thing.gettext.ngettext('bar', 'bars', 6);",
+                        "    thing.gettext.ngettext.call(null, 'baz', 'bazs', 6);",
+                        "    thing.gettext.ngettext.apply(null, ['qux', 'quxs', 6]);",
+                        "    thing.subthing.gettext.ngettext('corge', 'corges', 6);",
+                        "    thing.subthing.gettext.ngettext.call(null, 'grault', 'graults', 6);",
+                        "    thing.subthing.gettext.ngettext.apply(null, ['garply', 'garplies', 6]);",
+                        "}"
+                    ].join('\n')
+                }),
                 [{
                     key: 'foo',
                     plural: 'foos',
@@ -441,7 +484,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 2,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'bar',
                     plural: 'bars',
@@ -449,7 +492,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 3,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'baz',
                     plural: 'bazs',
@@ -457,7 +500,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 4,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'qux',
                     plural: 'quxs',
@@ -465,7 +508,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 5,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'corge',
                     plural: 'corges',
@@ -473,7 +516,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 6,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'grault',
                     plural: 'graults',
@@ -481,7 +524,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 7,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'garply',
                     plural: 'garplies',
@@ -489,23 +532,26 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 8,
-                    filename: '',
+                    filename: 'foo.js',
                 }]);
         });
 
-        it("should extract even if value is a variable", function() {
+        it("should jspot.extract.raw even if value is a variable", function() {
             assert.deepEqual(
-                extract([
-                    "function luke() {",
-                    "    this.gettext.ngettext('foo', 'foos', length);",
-                    "    thing.gettext.ngettext('bar', 'bars', length);",
-                    "    thing.gettext.ngettext.call(null, 'baz', 'bazs', length);",
-                    "    thing.gettext.ngettext.apply(null, ['qux', 'quxs', length]);",
-                    "    thing.subthing.gettext.ngettext('corge', 'corges', length);",
-                    "    thing.subthing.gettext.ngettext.call(null, 'grault', 'graults', length);",
-                    "    thing.subthing.gettext.ngettext.apply(null, ['garply', 'garplies', length]);",
-                    "}"
-                ].join('\n')),
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                        "    this.gettext.ngettext('foo', 'foos', length);",
+                        "    thing.gettext.ngettext('bar', 'bars', length);",
+                        "    thing.gettext.ngettext.call(null, 'baz', 'bazs', length);",
+                        "    thing.gettext.ngettext.apply(null, ['qux', 'quxs', length]);",
+                        "    thing.subthing.gettext.ngettext('corge', 'corges', length);",
+                        "    thing.subthing.gettext.ngettext.call(null, 'grault', 'graults', length);",
+                        "    thing.subthing.gettext.ngettext.apply(null, ['garply', 'garplies', length]);",
+                        "}"
+                    ].join('\n')
+                }),
                 [{
                     key: 'foo',
                     plural: 'foos',
@@ -513,7 +559,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 2,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'bar',
                     plural: 'bars',
@@ -521,7 +567,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 3,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'baz',
                     plural: 'bazs',
@@ -529,7 +575,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 4,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'qux',
                     plural: 'quxs',
@@ -537,7 +583,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 5,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'corge',
                     plural: 'corges',
@@ -545,7 +591,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 6,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'grault',
                     plural: 'graults',
@@ -553,7 +599,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 7,
-                    filename: '',
+                    filename: 'foo.js',
                 }, {
                     key: 'garply',
                     plural: 'garplies',
@@ -561,7 +607,7 @@ describe("extract", function() {
                     context: '',
                     category: null,
                     line: 8,
-                    filename: '',
+                    filename: 'foo.js',
                 }]);
         });
 
