@@ -1,7 +1,8 @@
-var _ = require('underscore');
 var path = require('path');
-var helpers = require('./helpers');
+var assert = require('assert');
+var _ = require('underscore');
 
+var helpers = require('./helpers');
 var jspot = require('../lib');
 
 
@@ -95,5 +96,15 @@ describe("jspot.extract", function() {
         helpers.assert_files_equal(
             path.join(tmpdir, 'messages.pot'),
             './test/fixtures/extract/headers/output/messages.pot');
+    });
+
+    it("should throw an error for unsupported formats", function() {
+        assert.throws(function() {
+            jspot.extract({
+                target: tmpdir,
+                source: ['a.custom']
+            });
+        },
+        /No extractor found for file 'a.custom'/);
     });
 });
