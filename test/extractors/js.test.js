@@ -126,7 +126,7 @@ describe("jspot.extractors:js", function() {
     });
 
     describe("gettext", function() {
-        it("should jspot.extract.raw member calls", function() {
+        it("should extract member calls", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
@@ -201,7 +201,7 @@ describe("jspot.extractors:js", function() {
                 }]);
         });
 
-        it("should jspot.extract.raw direct calls", function() {
+        it("should extract direct calls", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
@@ -231,7 +231,7 @@ describe("jspot.extractors:js", function() {
                 }]);
         });
 
-        it("should jspot.extract.raw '.call' calls", function() {
+        it("should extract '.call' calls", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
@@ -261,7 +261,7 @@ describe("jspot.extractors:js", function() {
                 }]);
         });
 
-        it("should jspot.extract.raw '.apply' calls", function() {
+        it("should extract '.apply' calls", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
@@ -293,7 +293,7 @@ describe("jspot.extractors:js", function() {
     });
 
     describe("gettext.gettext", function() {
-        it("should jspot.extract.raw member calls", function() {
+        it("should extract member calls", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
@@ -368,7 +368,7 @@ describe("jspot.extractors:js", function() {
                 }]);
         });
 
-        it("should jspot.extract.raw direct calls", function() {
+        it("should extract direct calls", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
@@ -398,7 +398,7 @@ describe("jspot.extractors:js", function() {
                 }]);
         });
 
-        it("should jspot.extract.raw '.call' calls", function() {
+        it("should extract '.call' calls", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
@@ -428,7 +428,7 @@ describe("jspot.extractors:js", function() {
                 }]);
         });
 
-        it("should jspot.extract.raw '.apply' calls", function() {
+        it("should extract '.apply' calls", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
@@ -461,7 +461,7 @@ describe("jspot.extractors:js", function() {
 
 
     describe("gettext.ngettext", function() {
-        it("should jspot.extract.raw member calls", function() {
+        it("should extract member calls", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
@@ -536,7 +536,7 @@ describe("jspot.extractors:js", function() {
                 }]);
         });
 
-        it("should jspot.extract.raw even if value is a variable", function() {
+        it("should extract even if value is a variable", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
