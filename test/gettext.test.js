@@ -1,9 +1,10 @@
 var assert = require('assert');
-var gettext = require('../lib/gettext');
+var jspot = require('../lib');
 
-describe("gettext", function() {
+
+describe("jspot.gettext", function() {
     it("should proxy to .gettext when called directly", function() {
-        assert.deepEqual(gettext('key'), {
+        assert.deepEqual(jspot.gettext('key'), {
             key: 'key',
             plural: null,
             domain: 'messages',
@@ -16,7 +17,7 @@ describe("gettext", function() {
         it("should throw an error if the key param is unusable", function() {
             assert.throws(
                 function() {
-                    gettext.gettext(null);
+                    jspot.gettext.gettext(null);
                 },
                 new RegExp([
                     "gettext was given a value of type 'object'",
@@ -26,7 +27,7 @@ describe("gettext", function() {
         });
 
         it("should return the gettext call's data", function() {
-            assert.deepEqual(gettext.gettext('key'), {
+            assert.deepEqual(jspot.gettext.gettext('key'), {
                 key: 'key',
                 plural: null,
                 domain: 'messages',
@@ -41,7 +42,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dgettext(null, 'key');
+                    jspot.gettext.dgettext(null, 'key');
                 },
                 new RegExp([
                     "dgettext was given a value of type 'object'",
@@ -53,7 +54,7 @@ describe("gettext", function() {
         it("should throw an error if the key param is unusable", function() {
             assert.throws(
                 function() {
-                    gettext.dgettext('domain', null);
+                    jspot.gettext.dgettext('domain', null);
                 },
                 new RegExp([
                     "dgettext was given a value of type 'object'",
@@ -63,7 +64,7 @@ describe("gettext", function() {
         });
 
         it("should return the dgettext call's data", function() {
-            assert.deepEqual(gettext.dgettext('domain', 'key'), {
+            assert.deepEqual(jspot.gettext.dgettext('domain', 'key'), {
                 key: 'key',
                 plural: null,
                 domain: 'domain',
@@ -78,7 +79,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dcgettext(null, 'key', 'category');
+                    jspot.gettext.dcgettext(null, 'key', 'category');
                 },
                 new RegExp([
                     "dcgettext was given a value of type 'object'",
@@ -90,7 +91,7 @@ describe("gettext", function() {
         it("should throw an error if the key param is unusable", function() {
             assert.throws(
                 function() {
-                    gettext.dcgettext('domain', null, 'category');
+                    jspot.gettext.dcgettext('domain', null, 'category');
                 },
                 new RegExp([
                     "dcgettext was given a value of type 'object'",
@@ -103,7 +104,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dcgettext('domain', 'key', null);
+                    jspot.gettext.dcgettext('domain', 'key', null);
                 },
                 new RegExp([
                     "dcgettext was given a value of type 'object'",
@@ -113,7 +114,7 @@ describe("gettext", function() {
         });
 
         it("should return the dcgettext call's data", function() {
-            assert.deepEqual(gettext.dcgettext('domain', 'key', 'category'), {
+            assert.deepEqual(jspot.gettext.dcgettext('domain', 'key', 'category'), {
                 key: 'key',
                 plural: null,
                 domain: 'domain',
@@ -127,7 +128,7 @@ describe("gettext", function() {
         it("should throw an error if the key param is unusable", function() {
             assert.throws(
                 function() {
-                    gettext.ngettext(null, 'plural', 'value');
+                    jspot.gettext.ngettext(null, 'plural', 'value');
                 },
                 new RegExp([
                     "ngettext was given a value of type 'object'",
@@ -140,7 +141,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.ngettext('key', null, 'value');
+                    jspot.gettext.ngettext('key', null, 'value');
                 },
                 new RegExp([
                     "ngettext was given a value of type 'object'",
@@ -150,7 +151,7 @@ describe("gettext", function() {
         });
 
         it("should return the ngettext call's data", function() {
-            assert.deepEqual(gettext.ngettext('key', 'plural', 'value'), {
+            assert.deepEqual(jspot.gettext.ngettext('key', 'plural', 'value'), {
                 key: 'key',
                 plural: 'plural',
                 domain: 'messages',
@@ -161,7 +162,7 @@ describe("gettext", function() {
 
         it("should return the ngettext call's data even if value is variable", function() {
             var length = 6;
-            assert.deepEqual(gettext.ngettext('key', 'plural', length), {
+            assert.deepEqual(jspot.gettext.ngettext('key', 'plural', length), {
                 key: 'key',
                 plural: 'plural',
                 domain: 'messages',
@@ -176,7 +177,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dngettext(null, 'key', 'plural', 'value');
+                    jspot.gettext.dngettext(null, 'key', 'plural', 'value');
                 },
                 new RegExp([
                     "dngettext was given a value of type 'object'",
@@ -188,7 +189,7 @@ describe("gettext", function() {
         it("should throw an error if the key param is unusable", function() {
             assert.throws(
                 function() {
-                    gettext.dngettext('domain', null, 'plural', 'value');
+                    jspot.gettext.dngettext('domain', null, 'plural', 'value');
                 },
                 new RegExp([
                     "dngettext was given a value of type 'object'",
@@ -201,7 +202,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dngettext('domain', 'key', null, 'value');
+                    jspot.gettext.dngettext('domain', 'key', null, 'value');
                 },
                 new RegExp([
                     "dngettext was given a value of type 'object'",
@@ -212,7 +213,7 @@ describe("gettext", function() {
 
         it("should return the dngettext call's data", function() {
             assert.deepEqual(
-                gettext.dngettext('domain', 'key', 'plural', 'value'),
+                jspot.gettext.dngettext('domain', 'key', 'plural', 'value'),
                 {
                     key: 'key',
                     plural: 'plural',
@@ -228,7 +229,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dcngettext(
+                    jspot.gettext.dcngettext(
                         null, 'key', 'plural', 'value', 'category');
                 },
                 new RegExp([
@@ -241,7 +242,7 @@ describe("gettext", function() {
         it("should throw an error if the key param is unusable", function() {
             assert.throws(
                 function() {
-                    gettext.dcngettext(
+                    jspot.gettext.dcngettext(
                         'domain', null, 'plural', 'value', 'category');
                 },
                 new RegExp([
@@ -255,7 +256,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dcngettext(
+                    jspot.gettext.dcngettext(
                         'domain', 'key', null, 'value', 'category');
                 },
                 new RegExp([
@@ -269,7 +270,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dcngettext(
+                    jspot.gettext.dcngettext(
                         'domain', 'key', 'plural', 'value', null);
                 },
                 new RegExp([
@@ -281,7 +282,7 @@ describe("gettext", function() {
 
         it("should return the dcngettext call's data", function() {
             assert.deepEqual(
-                gettext.dcngettext(
+                jspot.gettext.dcngettext(
                     'domain', 'key', 'plural', 'value', 'category'),
                 {
                     key: 'key',
@@ -298,7 +299,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.pgettext(null, 'key');
+                    jspot.gettext.pgettext(null, 'key');
                 },
                 new RegExp([
                     "pgettext was given a value of type 'object'",
@@ -310,7 +311,7 @@ describe("gettext", function() {
         it("should throw an error if the key param is unusable", function() {
             assert.throws(
                 function() {
-                    gettext.pgettext('context', null);
+                    jspot.gettext.pgettext('context', null);
                 },
                 new RegExp([
                     "pgettext was given a value of type 'object'",
@@ -320,7 +321,7 @@ describe("gettext", function() {
         });
 
         it("should return the pgettext call's data", function() {
-            assert.deepEqual(gettext.pgettext('context', 'key'), {
+            assert.deepEqual(jspot.gettext.pgettext('context', 'key'), {
                 key: 'key',
                 plural: null,
                 domain: 'messages',
@@ -335,7 +336,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dpgettext(null, 'context', 'key');
+                    jspot.gettext.dpgettext(null, 'context', 'key');
                 },
                 new RegExp([
                     "dpgettext was given a value of type 'object'",
@@ -348,7 +349,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dpgettext('domain', null, 'key');
+                    jspot.gettext.dpgettext('domain', null, 'key');
                 },
                 new RegExp([
                     "dpgettext was given a value of type 'object'",
@@ -360,7 +361,7 @@ describe("gettext", function() {
         it("should throw an error if the key param is unusable", function() {
             assert.throws(
                 function() {
-                    gettext.dpgettext('domain', 'context', null);
+                    jspot.gettext.dpgettext('domain', 'context', null);
                 },
                 new RegExp([
                     "dpgettext was given a value of type 'object'",
@@ -370,7 +371,7 @@ describe("gettext", function() {
         });
 
         it("should return the dpgettext call's data", function() {
-            assert.deepEqual(gettext.dpgettext('domain', 'context', 'key'), {
+            assert.deepEqual(jspot.gettext.dpgettext('domain', 'context', 'key'), {
                 key: 'key',
                 plural: null,
                 domain: 'domain',
@@ -385,7 +386,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.npgettext(null, 'key', 'plural', 'value');
+                    jspot.gettext.npgettext(null, 'key', 'plural', 'value');
                 },
                 new RegExp([
                     "npgettext was given a value of type 'object'",
@@ -397,7 +398,7 @@ describe("gettext", function() {
         it("should throw an error if the key param is unusable", function() {
             assert.throws(
                 function() {
-                    gettext.npgettext('context', null, 'plural', 'value');
+                    jspot.gettext.npgettext('context', null, 'plural', 'value');
                 },
                 new RegExp([
                     "npgettext was given a value of type 'object'",
@@ -410,7 +411,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.npgettext('context', 'key', null, 'value');
+                    jspot.gettext.npgettext('context', 'key', null, 'value');
                 },
                 new RegExp([
                     "npgettext was given a value of type 'object'",
@@ -421,7 +422,7 @@ describe("gettext", function() {
 
         it("should return the npgettext call's data", function() {
             assert.deepEqual(
-                gettext.npgettext('context', 'key', 'plural', 'value'),
+                jspot.gettext.npgettext('context', 'key', 'plural', 'value'),
                 {
                     key: 'key',
                     plural: 'plural',
@@ -437,7 +438,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dnpgettext(
+                    jspot.gettext.dnpgettext(
                         null, 'context', 'key', 'plural', 'value');
                 },
                 new RegExp([
@@ -451,7 +452,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dnpgettext(
+                    jspot.gettext.dnpgettext(
                         'domain', null, 'key', 'plural', 'value');
                 },
                 new RegExp([
@@ -464,7 +465,7 @@ describe("gettext", function() {
         it("should throw an error if the key param is unusable", function() {
             assert.throws(
                 function() {
-                    gettext.dnpgettext(
+                    jspot.gettext.dnpgettext(
                         'domain', 'context', null, 'plural', 'value');
                 },
                 new RegExp([
@@ -478,7 +479,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dnpgettext(
+                    jspot.gettext.dnpgettext(
                         'domain', 'context', 'key', null, 'value');
                 },
                 new RegExp([
@@ -490,7 +491,7 @@ describe("gettext", function() {
 
         it("should return the dnpgettext call's data", function() {
             assert.deepEqual(
-                gettext.dnpgettext(
+                jspot.gettext.dnpgettext(
                     'domain', 'context', 'key', 'plural', 'value'),
                 {
                     key: 'key',
@@ -507,7 +508,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dcnpgettext(
+                    jspot.gettext.dcnpgettext(
                         null, 'context', 'key', 'plural', 'value', 'category');
                 },
                 new RegExp([
@@ -521,7 +522,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dcnpgettext(
+                    jspot.gettext.dcnpgettext(
                         'domain', null, 'key', 'plural', 'value', 'category');
                 },
                 new RegExp([
@@ -534,7 +535,7 @@ describe("gettext", function() {
         it("should throw an error if the key param is unusable", function() {
             assert.throws(
                 function() {
-                    gettext.dcnpgettext(
+                    jspot.gettext.dcnpgettext(
                         'domain', 'context', null, 'plural', 'value', 'category');
                 },
                 new RegExp([
@@ -548,7 +549,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dcnpgettext(
+                    jspot.gettext.dcnpgettext(
                         'domain', 'context', 'key', null, 'value', 'category');
                 },
                 new RegExp([
@@ -562,7 +563,7 @@ describe("gettext", function() {
         function() {
             assert.throws(
                 function() {
-                    gettext.dcnpgettext(
+                    jspot.gettext.dcnpgettext(
                         'domain', 'context', 'key', 'plural', 'value', null);
                 },
                 new RegExp([
@@ -574,7 +575,7 @@ describe("gettext", function() {
 
         it("should return the dcnpgettext call's data", function() {
             assert.deepEqual(
-                gettext.dcnpgettext(
+                jspot.gettext.dcnpgettext(
                     'domain', 'context', 'key', 'plural', 'value', 'category'),
                 {
                     key: 'key',
