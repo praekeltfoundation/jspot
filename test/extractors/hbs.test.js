@@ -271,12 +271,33 @@ describe("jspot.extractors:hbs", function() {
             );
         });
 
+        it("should work inside a sub-expression statement", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<span>{{sprintf (gettext.ngettext '%d cat' '%d cats' much) much }}</span>",
+                    ].join('\n')
+                }),
+                [{
+                    key: '%d cat',
+                    plural: '%d cats',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
         it("should work inside a complicated statement", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
                     source: [
                         "{{#with foo }}",
+                        "{{sprintf (gettext.ngettext '%d cat' '%d cats' much) much }}",
                         "<ul>",
                         "{{#each users }}",
                         "{{#if firstname }}",
@@ -290,12 +311,20 @@ describe("jspot.extractors:hbs", function() {
                     ].join('\n')
                 }),
                 [{
+                    key: '%d cat',
+                    plural: '%d cats',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }, {
                     key: 'foo',
                     plural: null,
                     domain: 'messages',
                     context: '',
                     category: null,
-                    line: 5,
+                    line: 6,
                     filename: 'foo.js'
                 }, {
                     key: 'bar',
@@ -303,7 +332,7 @@ describe("jspot.extractors:hbs", function() {
                     domain: 'messages',
                     context: '',
                     category: null,
-                    line: 7,
+                    line: 8,
                     filename: 'foo.js'
                 }]
             );
