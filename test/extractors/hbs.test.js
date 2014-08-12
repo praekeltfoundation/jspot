@@ -165,6 +165,56 @@ describe("jspot.extractors:hbs", function() {
         });
 
 
+        it("should work with a block statement that uses private variable", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<ul>",
+                        "{{#list items }}",
+                        "<li>{{ @index }} {{ name }} {{gettext.ngettext '%s foo' '%s foos' @index }}</li>",
+                        "{{/list}}",
+                        "</ul>"
+                    ].join('\n')
+                }),
+                [{
+                    key: '%s foo',
+                    plural: '%s foos',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+
+        it("should work with a block statement that uses outside block variable", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<ul>",
+                        "{{#list items }}",
+                        "<li>{{ ../much }} {{ name }} {{gettext.ngettext '%s foo' '%s foos' ../much }}</li>",
+                        "{{/list}}",
+                        "</ul>"
+                    ].join('\n')
+                }),
+                [{
+                    key: '%s foo',
+                    plural: '%s foos',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+
         it("should work inside a #if else statement", function() {
             assert.deepEqual(
                 extractor({
@@ -301,9 +351,9 @@ describe("jspot.extractors:hbs", function() {
                         "<ul>",
                         "{{#each users }}",
                         "{{#if firstname }}",
-                        "<li>{{ firstname }} {{gettext 'foo' }}</li>",
+                        "<li>{{ firstname }} {{gettext 'foo' }} {{ ../much }}</li>",
                         "{{else}}",
-                        "<li>{{gettext 'bar' }} {{ lastname }}</li>",
+                        "<li>{{gettext 'bar' }} {{ lastname }} {{ @index }}</li>",
                         "{{/if}}",
                         "{{/each}}",
                         "</ul>",
