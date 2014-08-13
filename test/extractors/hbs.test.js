@@ -381,6 +381,18 @@ describe("jspot.extractors:hbs", function() {
             );
         });
 
+        it("throws an error if contains double & single quoted parameters", function() {
+            assert.throws(function() {
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<div>{{gettext \"<span id=\\\"id\\\" class='bold'>foo</span>\" }}</div>",
+                    ].join('\n')
+                });
+            },
+            'On line 1 column 15 of file foo.js.\nYour gettext string can not contains both single & double quote.');
+        });
+
         it("should work inside a complicated statement", function() {
             assert.deepEqual(
                 extractor({
