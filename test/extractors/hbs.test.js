@@ -341,6 +341,46 @@ describe("jspot.extractors:hbs", function() {
             );
         });
 
+        it("should work with double quoted parameters", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        '<div>{{gettext \'<span class="bold">foo</span>\' }}</div>',
+                    ].join('\n')
+                }),
+                [{
+                    key: '<span class="bold">foo</span>',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should work with single quoted parameters", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<div>{{gettext \"<span class='bold'>foo</span>\" }}</div>",
+                    ].join('\n')
+                }),
+                [{
+                    key: "<span class='bold'>foo</span>",
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
         it("should work inside a complicated statement", function() {
             assert.deepEqual(
                 extractor({
