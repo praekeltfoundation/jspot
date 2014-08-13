@@ -341,6 +341,58 @@ describe("jspot.extractors:hbs", function() {
             );
         });
 
+        it("should work with double quoted parameters", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        '<div>{{gettext \'<span class="bold">foo</span>\' }}</div>',
+                    ].join('\n')
+                }),
+                [{
+                    key: '<span class="bold">foo</span>',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should work with single quoted parameters", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<div>{{gettext \"<span class='bold'>foo</span>\" }}</div>",
+                    ].join('\n')
+                }),
+                [{
+                    key: "<span class='bold'>foo</span>",
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("throws an error if contains double & single quoted parameters", function() {
+            assert.throws(function() {
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<div>{{gettext \"<span id=\\\"id\\\" class='bold'>foo</span>\" }}</div>",
+                    ].join('\n')
+                });
+            },
+            'On line 1 column 15 of file foo.js.\nYour gettext string can not contains both single & double quote.');
+        });
+
         it("should work inside a complicated statement", function() {
             assert.deepEqual(
                 extractor({
