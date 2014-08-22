@@ -118,7 +118,6 @@ describe("jspot.extractors:hbs", function() {
             );
         });
 
-
         it("should allow a different separator to be used", function() {
             assert.deepEqual(
                 extractor({
@@ -130,6 +129,47 @@ describe("jspot.extractors:hbs", function() {
                         "<div>{{gettext 'foo' }}</div>",
                         "<div>{{gettext:gettext 'fooz' }}</div>",
                         "<div>{{gettext:ngettext 'bar' 'barz' 2 }}</div>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'foo',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }, {
+                    key: 'fooz',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }, {
+                    key: 'bar',
+                    plural: 'barz',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should allow an empty separator to be used", function() {
+            assert.deepEqual(
+                extractor({
+                    hbs: {
+                        separator: ''
+                    },
+                    filename: 'foo.js',
+                    source: [
+                        "<div>{{gettext 'foo' }}</div>",
+                        "<div>{{gettextgettext 'fooz' }}</div>",
+                        "<div>{{gettextngettext 'bar' 'barz' 2 }}</div>"
                     ].join('\n')
                 }),
                 [{
@@ -237,11 +277,11 @@ describe("jspot.extractors:hbs", function() {
             );
         });
 
-        it("should go with default extractor when separator is ''", function() {
+        it("should go with default separator when separator is not a string", function() {
             assert.deepEqual(
                 extractor({
                     hbs: {
-                        separator: ''
+                        separator: {}
                     },
                     filename: 'foo.js',
                     source: [
@@ -302,7 +342,6 @@ describe("jspot.extractors:hbs", function() {
             );
         });
 
-
         it("should work inside a block statement", function() {
             assert.deepEqual(
                 extractor({
@@ -326,7 +365,6 @@ describe("jspot.extractors:hbs", function() {
                 }]
             );
         });
-
 
         it("should work with a block statement that uses private variable", function() {
             assert.deepEqual(
@@ -352,7 +390,6 @@ describe("jspot.extractors:hbs", function() {
             );
         });
 
-
         it("should work with a block statement that uses outside block variable", function() {
             assert.deepEqual(
                 extractor({
@@ -376,7 +413,6 @@ describe("jspot.extractors:hbs", function() {
                 }]
             );
         });
-
 
         it("should work inside a #if else statement", function() {
             assert.deepEqual(
