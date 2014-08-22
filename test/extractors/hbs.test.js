@@ -12,7 +12,7 @@ describe("jspot.extractors:hbs", function() {
                     filename: 'foo.js',
                     source: [
                         "<div>{{ gettext 'foo' }}</div>",
-                        "<div>{{ gettext.gettext 'bar' }}</div>"
+                        "<div>{{ gettext_gettext 'bar' }}</div>"
                     ].join('\n')
                 }),
                 [{
@@ -39,7 +39,7 @@ describe("jspot.extractors:hbs", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
-                    source: "<div>{{ gettext.ngettext 'foo' 'fooz' 6 }}</div>"
+                    source: "<div>{{ gettext_ngettext 'foo' 'fooz' 6 }}</div>"
                 }),
                 [{
                     key: 'foo',
@@ -78,43 +78,246 @@ describe("jspot.extractors:hbs", function() {
     });
 
 
-    it("should allow a different keyword to be used", function() {
-        assert.deepEqual(
-            extractor({
-                keyword: '_',
-                filename: 'foo.js',
-                source: [
-                    "<div>{{_ 'foo' }}</div>",
-                    "<div>{{_.gettext 'fooz' }}</div>",
-                    "<div>{{_.ngettext 'bar' 'barz' 2 }}</div>"
-                ].join('\n')
-            }),
-            [{
-                key: 'foo',
-                plural: null,
-                domain: 'messages',
-                context: '',
-                category: null,
-                line: 1,
-                filename: 'foo.js'
-            }, {
-                key: 'fooz',
-                plural: null,
-                domain: 'messages',
-                context: '',
-                category: null,
-                line: 2,
-                filename: 'foo.js'
-            }, {
-                key: 'bar',
-                plural: 'barz',
-                domain: 'messages',
-                context: '',
-                category: null,
-                line: 3,
-                filename: 'foo.js'
-            }]
-        );
+    describe("hbs extractor options", function() {
+        it("should allow a different keyword to be used", function() {
+            assert.deepEqual(
+                extractor({
+                    keyword: '_',
+                    filename: 'foo.js',
+                    source: [
+                        "<div>{{_ 'foo' }}</div>",
+                        "<div>{{__gettext 'fooz' }}</div>",
+                        "<div>{{__ngettext 'bar' 'barz' 2 }}</div>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'foo',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }, {
+                    key: 'fooz',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }, {
+                    key: 'bar',
+                    plural: 'barz',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should allow a different separator to be used", function() {
+            assert.deepEqual(
+                extractor({
+                    hbs: {
+                        separator: ':'
+                    },
+                    filename: 'foo.js',
+                    source: [
+                        "<div>{{gettext 'foo' }}</div>",
+                        "<div>{{gettext:gettext 'fooz' }}</div>",
+                        "<div>{{gettext:ngettext 'bar' 'barz' 2 }}</div>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'foo',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }, {
+                    key: 'fooz',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }, {
+                    key: 'bar',
+                    plural: 'barz',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should allow an empty separator to be used", function() {
+            assert.deepEqual(
+                extractor({
+                    hbs: {
+                        separator: ''
+                    },
+                    filename: 'foo.js',
+                    source: [
+                        "<div>{{gettext 'foo' }}</div>",
+                        "<div>{{gettextgettext 'fooz' }}</div>",
+                        "<div>{{gettextngettext 'bar' 'barz' 2 }}</div>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'foo',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }, {
+                    key: 'fooz',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }, {
+                    key: 'bar',
+                    plural: 'barz',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should go with default options when no hbs options provide", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<div>{{gettext 'foo' }}</div>",
+                        "<div>{{gettext_gettext 'fooz' }}</div>",
+                        "<div>{{gettext_ngettext 'bar' 'barz' 2 }}</div>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'foo',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }, {
+                    key: 'fooz',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }, {
+                    key: 'bar',
+                    plural: 'barz',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should go with default options when hbs options is empty", function() {
+            assert.deepEqual(
+                extractor({
+                    hbs: {},
+                    filename: 'foo.js',
+                    source: [
+                        "<div>{{gettext 'foo' }}</div>",
+                        "<div>{{gettext_gettext 'fooz' }}</div>",
+                        "<div>{{gettext_ngettext 'bar' 'barz' 2 }}</div>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'foo',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }, {
+                    key: 'fooz',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }, {
+                    key: 'bar',
+                    plural: 'barz',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should go with default separator when separator is not a string", function() {
+            assert.deepEqual(
+                extractor({
+                    hbs: {
+                        separator: {}
+                    },
+                    filename: 'foo.js',
+                    source: [
+                        "<div>{{gettext 'foo' }}</div>",
+                        "<div>{{gettext_gettext 'fooz' }}</div>",
+                        "<div>{{gettext_ngettext 'bar' 'barz' 2 }}</div>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'foo',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 1,
+                    filename: 'foo.js'
+                }, {
+                    key: 'fooz',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }, {
+                    key: 'bar',
+                    plural: 'barz',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
     });
 
 
@@ -138,7 +341,6 @@ describe("jspot.extractors:hbs", function() {
                 }]
             );
         });
-
 
         it("should work inside a block statement", function() {
             assert.deepEqual(
@@ -164,7 +366,6 @@ describe("jspot.extractors:hbs", function() {
             );
         });
 
-
         it("should work with a block statement that uses private variable", function() {
             assert.deepEqual(
                 extractor({
@@ -172,7 +373,7 @@ describe("jspot.extractors:hbs", function() {
                     source: [
                         "<ul>",
                         "{{#list items }}",
-                        "<li>{{ @index }} {{ name }} {{gettext.ngettext '%s foo' '%s foos' @index }}</li>",
+                        "<li>{{ @index }} {{ name }} {{gettext_ngettext '%s foo' '%s foos' @index }}</li>",
                         "{{/list}}",
                         "</ul>"
                     ].join('\n')
@@ -188,7 +389,6 @@ describe("jspot.extractors:hbs", function() {
                 }]
             );
         });
-
 
         it("should work with a block statement that uses outside block variable", function() {
             assert.deepEqual(
@@ -197,7 +397,7 @@ describe("jspot.extractors:hbs", function() {
                     source: [
                         "<ul>",
                         "{{#list items }}",
-                        "<li>{{ ../much }} {{ name }} {{gettext.ngettext '%s foo' '%s foos' ../much }}</li>",
+                        "<li>{{ ../much }} {{ name }} {{gettext_ngettext '%s foo' '%s foos' ../much }}</li>",
                         "{{/list}}",
                         "</ul>"
                     ].join('\n')
@@ -214,14 +414,13 @@ describe("jspot.extractors:hbs", function() {
             );
         });
 
-
         it("should work inside a #if else statement", function() {
             assert.deepEqual(
                 extractor({
                     filename: 'foo.js',
                     source: [
                         "{{#if condition }}<div>{{gettext 'foo' }}</div>",
-                        "{{else}}<div>{{gettext.gettext 'bar' }}</div>",
+                        "{{else}}<div>{{gettext_gettext 'bar' }}</div>",
                         "{{/if}}"
                     ].join('\n')
                 }),
@@ -251,7 +450,7 @@ describe("jspot.extractors:hbs", function() {
                     filename: 'foo.js',
                     source: [
                         "{{#unless condition }}<div>{{gettext 'foo' }}</div>",
-                        "{{else}}<div>{{gettext.gettext 'bar' }}</div>",
+                        "{{else}}<div>{{gettext_gettext 'bar' }}</div>",
                         "{{/unless}}"
                     ].join('\n')
                 }),
@@ -326,7 +525,7 @@ describe("jspot.extractors:hbs", function() {
                 extractor({
                     filename: 'foo.js',
                     source: [
-                        "<span>{{sprintf (gettext.ngettext '%d cat' '%d cats' much) much }}</span>",
+                        "<span>{{sprintf (gettext_ngettext '%d cat' '%d cats' much) much }}</span>",
                     ].join('\n')
                 }),
                 [{
@@ -399,7 +598,7 @@ describe("jspot.extractors:hbs", function() {
                     filename: 'foo.js',
                     source: [
                         "{{#with foo }}",
-                        "{{sprintf (gettext.ngettext '%d cat' '%d cats' much) much }}",
+                        "{{sprintf (gettext_ngettext '%d cat' '%d cats' much) much }}",
                         "<ul>",
                         "{{#each users }}",
                         "{{#if firstname }}",
