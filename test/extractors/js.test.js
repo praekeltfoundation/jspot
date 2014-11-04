@@ -47,7 +47,7 @@ describe("jspot.extractors:js", function() {
                     "function palpatine() {",
                     "    gettext(null);",
                     "}"
-                ].join('\n'), 
+                ].join('\n'),
             });
         },
         /on line 2 of file 'foo.js'/);
@@ -56,7 +56,7 @@ describe("jspot.extractors:js", function() {
     it("throw error with identifier instead of singular string key", function() {
         assert.throws(function() {
             extractor({
-                filename: 'foo.js', 
+                filename: 'foo.js',
                 source: [
                     "function palpatine() {",
                     "    gettext(foo);",
@@ -71,7 +71,7 @@ describe("jspot.extractors:js", function() {
         assert.deepEqual(
             extractor({
                 keyword: '_',
-                filename: 'foo.js', 
+                filename: 'foo.js',
                 source: [
                     "function luke() {",
                     "    _('foo');",
@@ -122,6 +122,36 @@ describe("jspot.extractors:js", function() {
                 category: null,
                 line: 6,
                 filename: 'foo.js',
+            }]);
+    });
+
+    it("should ignore context arguments", function() {
+        assert.deepEqual(
+            extractor({
+                filename: 'foo.js',
+                source: [
+                    "function luke() {",
+                    "    thing.gettext.call(ignore_me, 'foo');",
+                    "    thing.gettext.apply(ignore_me, ['bar']);",
+                    "}"
+                ].join('\n')
+            }),
+            [{
+                key: 'foo',
+                plural: null,
+                domain: 'messages',
+                context: '',
+                category: null,
+                line: 2,
+                filename: 'foo.js'
+            }, {
+                key: 'bar',
+                plural: null,
+                domain: 'messages',
+                context: '',
+                category: null,
+                line: 3,
+                filename: 'foo.js'
             }]);
     });
 
@@ -459,7 +489,6 @@ describe("jspot.extractors:js", function() {
         });
     });
 
-
     describe("gettext.ngettext", function() {
         it("should extract member calls", function() {
             assert.deepEqual(
@@ -611,5 +640,154 @@ describe("jspot.extractors:js", function() {
                 }]);
         });
 
+        it("should extract even if value is a member expression", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                        "    this.gettext.ngettext('foo', 'foos', foo.length);",
+                        "    thing.gettext.ngettext('bar', 'bars', foo.bar.length);",
+                        "    thing.gettext.ngettext.call(null, 'baz', 'bazs', foo.length);",
+                        "    thing.gettext.ngettext.apply(null, ['qux', 'quxs', foo.bar.length]);",
+                        "    thing.subthing.gettext.ngettext('corge', 'corges', foo.length);",
+                        "    thing.subthing.gettext.ngettext.call(null, 'grault', 'graults', foo.bar.length);",
+                        "    thing.subthing.gettext.ngettext.apply(null, ['garply', 'garplies', foo.length]);",
+                        "}"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'foo',
+                    plural: 'foos',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js',
+                }, {
+                    key: 'bar',
+                    plural: 'bars',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js',
+                }, {
+                    key: 'baz',
+                    plural: 'bazs',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 4,
+                    filename: 'foo.js',
+                }, {
+                    key: 'qux',
+                    plural: 'quxs',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 5,
+                    filename: 'foo.js',
+                }, {
+                    key: 'corge',
+                    plural: 'corges',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 6,
+                    filename: 'foo.js',
+                }, {
+                    key: 'grault',
+                    plural: 'graults',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 7,
+                    filename: 'foo.js',
+                }, {
+                    key: 'garply',
+                    plural: 'garplies',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 8,
+                    filename: 'foo.js',
+                }]);
+        });
+
+        it("should extract even if value is a call expression", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "function luke() {",
+                        "    this.gettext.ngettext('foo', 'foos', this.getCount(foo));",
+                        "    thing.gettext.ngettext('bar', 'bars', this.getCount(foo));",
+                        "    thing.gettext.ngettext.call(null, 'baz', 'bazs', ext.getCount(foo));",
+                        "    thing.gettext.ngettext.apply(null, ['qux', 'quxs', ext.getCount(foo.bar)]);",
+                        "    thing.subthing.gettext.ngettext('corge', 'corges', this.getCount(foo));",
+                        "    thing.subthing.gettext.ngettext.call(null, 'grault', 'graults', ext.getCount(foo.bar));",
+                        "    thing.subthing.gettext.ngettext.apply(null, ['garply', 'garplies', this.getCount(foo)]);",
+                        "}"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'foo',
+                    plural: 'foos',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js',
+                }, {
+                    key: 'bar',
+                    plural: 'bars',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js',
+                }, {
+                    key: 'baz',
+                    plural: 'bazs',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 4,
+                    filename: 'foo.js',
+                }, {
+                    key: 'qux',
+                    plural: 'quxs',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 5,
+                    filename: 'foo.js',
+                }, {
+                    key: 'corge',
+                    plural: 'corges',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 6,
+                    filename: 'foo.js',
+                }, {
+                    key: 'grault',
+                    plural: 'graults',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 7,
+                    filename: 'foo.js',
+                }, {
+                    key: 'garply',
+                    plural: 'garplies',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 8,
+                    filename: 'foo.js',
+                }]);
+        });
     });
 });
