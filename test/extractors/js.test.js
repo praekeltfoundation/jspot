@@ -125,6 +125,36 @@ describe("jspot.extractors:js", function() {
             }]);
     });
 
+    it("should ignore context arguments", function() {
+        assert.deepEqual(
+            extractor({
+                filename: 'foo.js',
+                source: [
+                    "function luke() {",
+                    "    thing.gettext.call(ignore_me, 'foo');",
+                    "    thing.gettext.apply(ignore_me, ['bar']);",
+                    "}"
+                ].join('\n')
+            }),
+            [{
+                key: 'foo',
+                plural: null,
+                domain: 'messages',
+                context: '',
+                category: null,
+                line: 2,
+                filename: 'foo.js'
+            }, {
+                key: 'bar',
+                plural: null,
+                domain: 'messages',
+                context: '',
+                category: null,
+                line: 3,
+                filename: 'foo.js'
+            }]);
+    });
+
     describe("gettext", function() {
         it("should extract member calls", function() {
             assert.deepEqual(
@@ -459,7 +489,6 @@ describe("jspot.extractors:js", function() {
         });
     });
 
-
     describe("gettext.ngettext", function() {
         it("should extract member calls", function() {
             assert.deepEqual(
@@ -760,6 +789,5 @@ describe("jspot.extractors:js", function() {
                     filename: 'foo.js',
                 }]);
         });
-
     });
 });
