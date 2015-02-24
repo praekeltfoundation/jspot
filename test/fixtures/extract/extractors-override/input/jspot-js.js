@@ -1,4 +1,4 @@
-var _extract = require('./lib/extractors/js');
+var _extract = require('../../../../../lib/extractors/js');
 
 
 function extract(opts) {
