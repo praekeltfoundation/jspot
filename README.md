@@ -8,7 +8,7 @@ $ jspot extract file.js -k _
 
 ```javascript
 _('foo');
-_.ngettext('bar', 'bars');
+_.ngettext('bar', 'bars', 23);
 ```
 
 ## How to install
