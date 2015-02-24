@@ -1,7 +1,9 @@
 var _ = require('underscore');
 var path = require('path');
 
+var jspot = require('../lib');
 var cli = require('../lib/cli');
+var extract_js = require('../lib/extractors/js');
 var helpers = require('./helpers');
 
 
@@ -95,6 +97,37 @@ describe('cli', function() {
             helpers.assert_files_equal(
                 path.join(tmpdir, 'messages.pot'),
                 './test/fixtures/extract/headers/output/messages.pot');
+        });
+
+        it("should support custom extractors", function() {
+            cli.parse([
+                'extract',
+                '-t', tmpdir,
+                '-e', 'txt:./test/fixtures/extract/extractors/input/jspot-txt',
+                './test/fixtures/extract/extractors/input/a.txt',
+                './test/fixtures/extract/extractors/input/b.txt',
+            ]);
+
+            helpers.assert_files_equal(
+                path.join(tmpdir, 'messages.pot'),
+                './test/fixtures/extract/extractors/output/messages.pot');
+        });
+
+        it("should allow custom extractors to override builtins", function() {
+            cli.parse([
+                'extract',
+                '-t', tmpdir,
+                '-e',
+                'js:./test/fixtures/extract/extractors-override/input/jspot-js',
+                './test/fixtures/extract/extractors-override/input/a.js',
+            ]);
+
+            helpers.assert_files_equal(
+                path.join(tmpdir, 'messages.pot'),
+                './test/fixtures/extract/extractors-override/output/messages.pot');
+
+            // restore the original extractor
+            jspot.extractors.support('js', extract_js);
         });
     });
 
