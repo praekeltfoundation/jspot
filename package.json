@@ -37,7 +37,7 @@
     "handlebars": "^3.0.0",
     "moment": "~2.5.1",
     "nomnom": "~1.6.2",
-    "po2json": "~0.2.3",
+    "po2json": "~0.4.1",
     "underscore": "~1.6.0"
   }
 }
