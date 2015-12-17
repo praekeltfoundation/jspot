@@ -155,6 +155,23 @@ describe("jspot.extractors:js", function() {
             }]);
     });
 
+    it("should work with es2015 syntax", function() {
+        assert.deepEqual(
+            extractor({
+                filename: 'foo.js',
+                source: "class Foo {bar() { gettext('baz'); }}"
+            }),
+            [{
+                key: 'baz',
+                plural: null,
+                domain: 'messages',
+                context: '',
+                category: null,
+                line: 1,
+                filename: 'foo.js'
+            }]);
+    });
+
     describe("gettext", function() {
         it("should extract member calls", function() {
             assert.deepEqual(
