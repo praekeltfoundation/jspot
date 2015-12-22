@@ -172,6 +172,33 @@ describe("jspot.extractors:js", function() {
             }]);
     });
 
+    it("should work allow overriding parser options", function() {
+        var testOptions = {
+            filename: 'foo.js',
+            source: "gettext('foobar');"
+        };
+
+        extractor(testOptions);
+
+        assert.deepEqual(testOptions.parserOptions, {
+            ecmaVersion: 6,
+            locations: true
+        });
+
+        testOptions.parserOptions = {
+            ecmaVersion: 5,
+            hello: 'world'
+        };
+
+        extractor(testOptions);
+
+        assert.deepEqual(testOptions.parserOptions, {
+            ecmaVersion: 5,
+            locations: true,
+            hello: 'world'
+        });
+    });
+
     describe("gettext", function() {
         it("should extract member calls", function() {
             assert.deepEqual(
