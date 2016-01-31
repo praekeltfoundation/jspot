@@ -222,7 +222,7 @@ describe("jspot.pot", function() {
         };
 
         jspot.pot({
-            pots:pots,
+            pots: pots,
             extracts: [{
                 key: 'foo',
                 plural: null,
@@ -238,6 +238,44 @@ describe("jspot.pot", function() {
             msgstr: [''],
             msgctxt: '',
             comments: {reference: 'lamb.js:3 ham.js:1'}
+        });
+    });
+
+    it("should replace singular translations with plural translations",
+    function() {
+        var pots = {
+            messages: {
+                translations: {
+                    '': {
+                        foo: {
+                            msgid: 'foo',
+                            msgstr: [''],
+                            msgctxt: '',
+                            comments: {reference: 'ham.js:1'}
+                        }
+                    },
+                }
+            }
+        };
+
+        jspot.pot({
+            pots: pots,
+            extracts: [{
+                key: 'foo',
+                plural: 'foos',
+                context: '',
+                domain: 'messages',
+                line: 1,
+                filename: 'lamb.js'
+            }]
+        });
+
+        assert.deepEqual(pots.messages.translations[''].foo, {
+            msgid: 'foo',
+            msgid_plural: 'foos',
+            msgstr: ['', ''],
+            msgctxt: '',
+            comments: {reference: 'ham.js:1 lamb.js:1'}
         });
     });
 });
