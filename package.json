@@ -1,6 +1,6 @@
 {
   "name": "jspot",
-  "version": "0.3.11",
+  "version": "0.3.12",
   "description": "Extracts gettext strings from Javascript files into pot files",
   "main": "./lib/index.js",
   "bin": {
@@ -34,7 +34,7 @@
   "dependencies": {
     "falafel": "~1.2",
     "gettext-parser": "~0.2.0",
-    "handlebars": "^3.0.0",
+    "handlebars": ">=3.0.0",
     "moment": "~2.5.1",
     "nomnom": "~1.6.2",
     "po2json": "~0.4.1",
