@@ -639,6 +639,164 @@ describe("jspot.extractors:hbs", function() {
             );
         });
 
+        it("should work for partial hash parameters", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<form>",
+                        "{{> 'input' placeholder=(gettext 'type here...' ) }}",
+                        "</form>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'type here...',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should work for partial hash parameters with plural", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<form>",
+                        "{{> 'input' placeholder=(gettext_ngettext 'type here...' 'type here a lot...' 0 ) }}",
+                        "</form>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'type here...',
+                    plural: 'type here a lot...',
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should work for partial with multiple hash parameters", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<form>",
+                        "{{> 'input' placeholder=(gettext 'type here...' ) title=(gettext 'just an input' ) }}",
+                        "</form>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'type here...',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }, {
+                    key: 'just an input',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should work for partial without hash parameters", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<form>",
+                        "{{> 'input' }}",
+                        "</form>"
+                    ].join('\n')
+                }),
+                []
+            );
+        });
+
+        it("should work for partial with single parameters", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<form>",
+                        "{{> 'input' bar }}",
+                        "</form>"
+                    ].join('\n')
+                }),
+                []
+            );
+        });
+
+        it("should work for partial with single & hash parameters", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<form>",
+                        "{{> 'input' bar placeholder=(gettext 'type here...') }}",
+                        "</form>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'type here...',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 2,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
+        it("should work for partial hash parameters and some others statement", function() {
+            assert.deepEqual(
+                extractor({
+                    filename: 'foo.js',
+                    source: [
+                        "<form>",
+                        "{{#if bar }}",
+                        "{{> 'input' placeholder=(gettext 'type here...') }}",
+                        "{{else}}",
+                        "<span>{{gettext 'you cannot see me' }}</span>",
+                        "{{/if}}",
+                        "</form>"
+                    ].join('\n')
+                }),
+                [{
+                    key: 'type here...',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 3,
+                    filename: 'foo.js'
+                }, {
+                    key: 'you cannot see me',
+                    plural: null,
+                    domain: 'messages',
+                    context: '',
+                    category: null,
+                    line: 5,
+                    filename: 'foo.js'
+                }]
+            );
+        });
+
     });
 
 });
