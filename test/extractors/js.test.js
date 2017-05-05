@@ -172,6 +172,22 @@ describe("jspot.extractors:js", function() {
             }]);
     });
 
+    it("should not try to eval template literal", function() {
+        assert.deepEqual(
+            extractor({
+                filename: 'foo.js',
+                source: "var msg = gettext.ngettext(`${count} mississippi`, `${count} mississippis`, count);"
+            }), [{
+                key: '${count} mississippi',
+                plural: '${count} mississippis',
+                domain: 'messages',
+                context: '',
+                category: null,
+                line: 1,
+                filename: 'foo.js',
+            }]);
+    });
+
     it("should work allow overriding parser options", function() {
         var testOptions = {
             filename: 'foo.js',
