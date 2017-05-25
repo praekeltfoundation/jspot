@@ -181,7 +181,6 @@ describe("jspot.extractors:js", function() {
         extractor(testOptions);
 
         assert.deepEqual(testOptions.parserOptions, {
-            ecmaVersion: 6,
             locations: true
         });
 
