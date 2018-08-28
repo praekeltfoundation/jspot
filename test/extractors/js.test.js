@@ -172,6 +172,38 @@ describe("jspot.extractors:js", function() {
             }]);
     });
 
+    it("should not try to eval template literal", function() {
+        assert.deepEqual(
+            extractor({
+                filename: 'foo.js',
+                source: "var msg = gettext.ngettext(`${count} mississippi`, `${count} mississippis`, count);"
+            }), [{
+                key: '${count} mississippi',
+                plural: '${count} mississippis',
+                domain: 'messages',
+                context: '',
+                category: null,
+                line: 1,
+                filename: 'foo.js',
+            }]);
+    });
+
+    it("should not fail miserably when template literal contains simple quote", function() {
+        assert.deepEqual(
+            extractor({
+                filename: 'foo.js',
+                source: "{test: `bar and ${this.foo || ''} are forever`}"
+            }), []);
+    });
+
+    it("should not fail miserably when template literal contains another template literal", function() {
+        assert.deepEqual(
+            extractor({
+                filename: 'foo.js',
+                source: "{test: `var and ${this.foos.map(l => `${f.toLowerCase()}-suffixed`)}`}"
+            }), []);
+    });
+
     it("should work allow overriding parser options", function() {
         var testOptions = {
             filename: 'foo.js',
@@ -181,7 +213,6 @@ describe("jspot.extractors:js", function() {
         extractor(testOptions);
 
         assert.deepEqual(testOptions.parserOptions, {
-            ecmaVersion: 6,
             locations: true
         });
 

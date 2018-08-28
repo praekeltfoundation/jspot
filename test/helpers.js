@@ -15,6 +15,9 @@ helpers.assert_files_equal = function(actual_path, expected_path) {
     assert.equal(actual.toString(), expected.toString());
 };
 
+helpers.assert_file_not_exists = function(actual_path) {
+    assert.equal(fs.existsSync(actual_path), false);
+};
 
 helpers.tmpdir = function(done) {
     tmp.dir({
