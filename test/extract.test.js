@@ -107,4 +107,14 @@ describe("jspot.extract", function() {
         },
         /No extractor found for file 'a.custom'/);
     });
+
+    it("should not throw an error for unsupported formats if catchExtractError is set", function() {
+        jspot.extract({
+            catchExtractError: true,
+            target: tmpdir,
+            source: ['./test/fixtures/extract/wrong/input/a.js']
+        });
+
+        helpers.assert_file_not_exists(path.join(tmpdir, 'messages.pot'));
+    });
 });
