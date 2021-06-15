@@ -38,6 +38,6 @@
     "moment": "~2.20.1",
     "nomnom": "~1.6.2",
     "po2json": "~0.4.1",
-    "underscore": "~1.6.0"
+    "underscore": "~1.12.1"
   }
 }
