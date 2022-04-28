@@ -7,6 +7,10 @@ var extract_js = require('../lib/extractors/js');
 var helpers = require('./helpers');
 
 
+function call_jspot(args) {
+    return cli.parse(['/path/to/node', '/path/to/cli.js'].concat(args));
+}
+
 describe('cli', function() {
     var now = _.now;
     var tmpdir;
@@ -29,7 +33,7 @@ describe('cli', function() {
     describe('extract', function() {
         it("should extract gettext strings from source files into pot files",
         function() {
-            cli.parse([
+            call_jspot([
                 'extract',
                 '-t', tmpdir,
                 './test/fixtures/extract/simple/input/a.js',
@@ -42,7 +46,7 @@ describe('cli', function() {
         });
 
         it("should allow the keyword option to be configurable", function() {
-            cli.parse([
+            call_jspot([
                 'extract',
                 '-k', '_',
                 '-t', tmpdir,
@@ -56,7 +60,7 @@ describe('cli', function() {
         });
 
         it("should support multiple domains", function() {
-            cli.parse([
+            call_jspot([
                 'extract',
                 '-t', tmpdir,
                 './test/fixtures/extract/domains/input/a.js',
@@ -73,7 +77,7 @@ describe('cli', function() {
         });
 
         it("should support multiple contexts", function() {
-            cli.parse([
+            call_jspot([
                 'extract',
                 '-t', tmpdir,
                 './test/fixtures/extract/contexts/input/a.js',
@@ -86,7 +90,7 @@ describe('cli', function() {
         });
 
         it("should support configurable pot headers", function() {
-            cli.parse([
+            call_jspot([
                 'extract',
                 '--header=language:en',
                 '--header=project-id-version:0:1:0',
@@ -100,7 +104,7 @@ describe('cli', function() {
         });
 
         it("should support custom extractors", function() {
-            cli.parse([
+            call_jspot([
                 'extract',
                 '-t', tmpdir,
                 '-e', 'txt:./test/fixtures/extract/extractors/input/jspot-txt',
@@ -114,7 +118,7 @@ describe('cli', function() {
         });
 
         it("should allow custom extractors to override builtins", function() {
-            cli.parse([
+            call_jspot([
                 'extract',
                 '-t', tmpdir,
                 '-e',
@@ -133,7 +137,7 @@ describe('cli', function() {
 
     describe('json', function() {
         it("should convert the po files to json files", function() {
-            cli.parse([
+            call_jspot([
                 'json',
                 '-t', tmpdir,
                 './test/fixtures/json/simple/input/error.po',

@@ -36,7 +36,7 @@
     "gettext-parser": "~0.2.0",
     "handlebars": ">=3.0.0",
     "moment": "~2.29.2",
-    "nomnom": "~1.6.2",
+    "commander": "~8.3.0",
     "po2json": "~0.4.1",
     "underscore": "~1.12.1"
   }
